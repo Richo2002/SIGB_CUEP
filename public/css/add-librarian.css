@@ -1,0 +1,30 @@
+#main-title
+{
+    color: rgba(34, 88, 166) !important;
+}
+
+#photo-bloc
+{
+    background-color: rgba(133, 135, 150, 0.2);
+}
+
+.input-group-text
+{
+    border-top-right-radius: 0%;
+    border-bottom-right-radius: 0%;
+}
+
+#submit-btn:hover, #submit-btn
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+}
+
+#ImageInput::-webkit-file-upload-button
+{
+    display: none;
+}
+
+
+
+

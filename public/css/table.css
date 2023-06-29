@@ -1,0 +1,56 @@
+.actif, .rendered, .book
+{
+    color: rgba(0, 133, 89) !important;
+}
+
+.inactif
+{
+    color: rgb(231, 63, 26);
+}
+
+
+#pen
+{
+    background-color: rgba(49, 63, 65, 1);
+    color: white;
+}
+
+#trash, #ban, #check
+{
+    background-color: rgb(231, 63, 26);
+    color: white;
+}
+
+#card, #member, #download, #return
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+}
+
+#main-title, #eye
+{
+    color: rgba(34, 88, 166) !important;
+}
+
+#submit-btn:hover, #submit-btn
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+}
+
+#loan-btn:hover, #loan-btn
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+}
+
+tbody > tr > td > .disabled
+{
+    opacity: 0.4;
+    pointer-events: none;
+    color: #999999 !important;
+    text-decoration: none;
+    cursor: not-allowed;
+}
+
+

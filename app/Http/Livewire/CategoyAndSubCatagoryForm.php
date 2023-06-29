@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Http\Livewire;
+
+use Livewire\Component;
+use App\Models\Category;
+use App\Models\SubCategory;
+
+class CategoyAndSubCatagoryForm extends Component
+{
+    public $resource;
+    public $category_id;
+
+    public function render()
+    {
+        $sub_categories = SubCategory::where('category_id', $this->category_id ? intval($this->category_id) : intval($this->resource ? $this->resource->id : 0))->get();
+        $categories = Category::orderBy('name')->get();
+
+        return view('livewire.categoy-and-sub-catagory-form', [
+            'sub_categories' => $sub_categories,
+            'categories' => $categories
+        ]);
+    }
+}

@@ -1,0 +1,69 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Resource extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'identification_number',
+        'registration_number',
+        'title',
+        'authors',
+        'publication_year',
+        'cover_page',
+        'digital_version',
+        'copies_number',
+        'page_number',
+        'available_number',
+        'edition',
+        'type_id',
+        'sub_category_id',
+        'institute_id',
+        'keywords'
+    ];
+
+    /**
+     * Get the category of resource.
+     */
+    public function sub_category()
+    {
+        return $this->belongsTo(SubCategory::class);
+    }
+
+    /**
+     * Get the type of resource.
+     */
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
+
+    /**
+     * Get the institute of resource.
+     */
+    public function institute()
+    {
+        return $this->belongsTo(Institute::class);
+    }
+
+    /**
+     * The reservations that belong to the resource.
+     */
+    public function reservations()
+    {
+        return $this->belongsToMany(Reservation::class);
+    }
+
+    /**
+     * The loans that belong to the resource.
+     */
+    public function loans()
+    {
+        return $this->belongsToMany(Loan::class);
+    }
+}

@@ -1,0 +1,102 @@
+.welcome
+{
+    background-color: rgba(206, 213, 212, 1);
+}
+
+.navbar
+{
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-connect, .btn-connect:hover, .btn-contact, .btn-contact:hover
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+}
+
+.nav-item .nav-link
+{
+    color: rgba(49, 63, 65, 0.7);
+
+}
+
+.nav-item > .active
+{
+    border-bottom: 2px solid rgba(34, 88, 166);
+    color: rgba(49, 63, 65, 1) !important;
+}
+
+.carousel-item
+{
+    max-height: 97vh !important;
+}
+
+.carousel-item > img
+{
+    object-fit: cover !important;
+}
+
+.catalog-title, .catalog-title:hover,  .contact-title, .contact-title:hover
+{
+    background-color: rgba(159, 173, 164);
+    color: white;
+    border-radius: 0% !important;
+    cursor:default;
+}
+
+#contact p > a
+{
+    color: rgba(34, 88, 166);
+}
+
+/* .card-img-top
+{
+    height: 200px;
+    object-fit: contain !important;
+} */
+
+
+#catalog
+{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.error
+{
+    color: rgb(231, 63, 26);
+}
+
+.card
+{
+    max-width: 600px;
+}
+
+.card > img
+{
+    object-fit: cover;
+}
+
+
+footer
+{
+    background-color: rgba(49, 63, 65, 1);
+    color: #ffffff;
+}
+
+
+.swiper {
+    max-height: 300px;
+}
+
+.swiper-button-next::after, .swiper-button-prev::after {
+  color: rgba(34, 88, 166) !important;
+  font-weight: bold !important;
+}
+
+.swiper-button-disabled {
+  opacity: 0.3;
+}

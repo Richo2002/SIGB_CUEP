@@ -1,0 +1,31 @@
+.btn-user
+{
+    /* background-color: #44ad46; */
+    background-color: rgba(34, 88, 166);
+    color: white;
+    border: none;
+}
+
+.btn-user:hover
+{
+    color: white !important;
+}
+
+.text-center > a
+{
+    color: rgba(34, 88, 166);
+}
+
+body
+{
+    background: url('../img/background_login.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#logo_cuep
+{
+    margin: 0;
+    padding: 0;
+}

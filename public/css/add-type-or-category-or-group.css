@@ -1,0 +1,7 @@
+#submit-btn:hover, #submit-btn
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+    border-top-left-radius: 0%;
+    border-bottom-left-radius: 0%;
+}
