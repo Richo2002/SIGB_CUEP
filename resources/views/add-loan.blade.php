@@ -60,6 +60,12 @@
                     </div>
                     <p class="mb-4">Remplissez les informations ci-dessous pour enregistrer un nouvel prêt.</p>
 
+                    @if (session()->has('message'))
+                        <div class="alert alert-danger">
+                            {{ session('message') }}
+                        </div>
+                    @endif
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Loan;
 use App\Models\User;
 use App\Models\Group;
+use App\Models\Resource;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -58,8 +59,19 @@ class LoanController extends Controller
         }
         else
         {
-            $loaner = User::where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire'], ['npi', intval($request->npi)]])->first();
+            $loaner = User::user()->where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire'], ['npi', intval($request->npi)]])->first();
+
+            if($loaner == null)
+            {
+                return back()->with(['message' => "Nous n'avions pas trouvé de lecteur avec ce NIP dans votre bibliotheque"]);
+            }
         }
+
+        if($loaner->loans()->latest()->first() && ($loaner->loans()->latest()->first()->status == "En cour" || $loaner->loans()->latest()->first()->status == "Retard"))
+        {
+            return back()->with(['message' => "Nous ne pouvons pas éffectuer de pret pour ce lecteur / groupe"]);
+        }
+
         $start_date = Carbon::now();
 
         $loan = new Loan([
@@ -71,6 +83,18 @@ class LoanController extends Controller
         $loaner->loans()->save($loan);
 
         $loan->resources()->attach(session('selections'));
+
+        foreach (session('selections') as $id) {
+
+            $resource = Resource::find($id);
+
+            if ($resource) {
+
+                $resource->available_number -= 1;
+
+                $resource->save();
+            }
+        }
 
         session()->forget('selections');
 

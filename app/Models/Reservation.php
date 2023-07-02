@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Reservation extends Model
 {
@@ -39,6 +41,24 @@ class Reservation extends Model
     public function loan()
     {
         return $this->hasOne(Loan::class);
+    }
+
+    public function scopeReservation(Builder $query)
+    {
+        $user = User::find(Auth::user()->id);
+
+        if($user->role === "Bibliothécaire")
+        {
+            $query->whereHas('resources', function($query) use($user) {
+                $query->where('resources.institute_id', $user->institute()->first()->id);
+            });
+        }
+        else
+        {
+            $query->whereHas('resources', function($query) use($user) {
+                $query->where('resources.institute_id', $user->registrations()->latest()->first()->institute_id);
+            })->where('reader_id', $user->id);
+        }
     }
 
 

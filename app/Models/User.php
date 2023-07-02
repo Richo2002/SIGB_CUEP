@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -95,5 +97,14 @@ class User extends Authenticatable
     public function loans()
     {
         return $this->hasMany(Loan::class, 'reader_id');
+    }
+
+    public function scopeUser(Builder $query)
+    {
+        $user = User::find(Auth::user()->id);
+
+        $query->whereHas('registrations', function($query) use($user){
+            $query->where('registrations.institute_id', $user->institute()->first()->id);
+        });
     }
 }

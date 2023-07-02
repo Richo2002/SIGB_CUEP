@@ -24,7 +24,7 @@ class Loan extends Component
 
     public function updatedSearchInput()
     {
-        $this->loans = ModelsLoan::where('start_date', 'LIKE', '%'.$this->searchInput.'%')
+        $this->loans = ModelsLoan::loan()->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
                             ->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
                             ->orWhereHas('reader', function($query) {
                                 $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
@@ -41,6 +41,9 @@ class Loan extends Component
     public function retrieve($currentLoanId)
     {
         $loan = ModelsLoan::findOrFail($currentLoanId);
+
+        $loan->resources()->increment('available_number');
+
         $loan->status = "Terminé";
         $loan->save();
 
@@ -55,7 +58,7 @@ class Loan extends Component
     {
         if(!$this->searchInput)
         {
-            $this->loans = ModelsLoan::paginate(10);
+            $this->loans = ModelsLoan::loan()->paginate(10);
             $this->loansLength = $this->loans->total();
         }
 

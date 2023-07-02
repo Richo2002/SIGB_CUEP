@@ -42,28 +42,25 @@
                   </div>
             </div>
             <div class="col-12">
-
-                @if ($resources->count() > 0)
-                    <div class="swiper mySwiper">
+                @if (count($resources) > 0)
+                    <div class="swiper">
                         <div class="swiper-wrapper">
                             @foreach ($resources as $resource)
-                                <div class="swiper-slide">
-                                    <a href="" wire:click.prevent="showDetails({{ $resource->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                <div class="swiper-slide" wire:click.prevent="showDetails({{ $resource->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" wire:key="{{ $resource->id }}">
+                                    <a href="">
                                         <img src="{{ '/storage/coverPages/'.$resource->cover_page }}" height="250" width="250">
                                     </a>
                                 </div>
                             @endforeach
                         </div>
+                        <div class="swiper-pagination"></div>
+
                         <div class="swiper-button-next"></div>
                         <div class="swiper-button-prev"></div>
-                        <div class="swiper-pagination"></div>
                     </div>
                 @else
                     <h6 class="error text-center mt-5">Nous sommes désolés, mais la ressource que vous recherchez n'est pas encore disponible dans notre bibliothèque. Elle n'a surement pas encore été enregistrée. Veuillez vérifier ultérieurement pour voir si elle est disponible.</h6>
                 @endif
-                {{-- <div class="d-flex flex-row justify-content-between">
-                    {{ $resources->links() }}
-                </div> --}}
             </div>
         </div>
     </section>
@@ -92,17 +89,6 @@
                             <p class="card-text">Nombre d'exemplaires : {{ $resourceDetails ? $resourceDetails->copies_number : ""}}</p>
                             <p class="card-text">Nombre disponibles : {{ $resourceDetails ? $resourceDetails->available_number : ""}}</p>
                         </div>
-                        {{-- @auth
-                            <div class="card-footer">
-                                <div class="row align-items-center">
-                                        <div class="col-12">
-                                        <a class="btn btn-download btn-block" href="lien_vers_la_version_numerique.pdf" target="_blank">
-                                            <i class="fas fa-download"></i> Télécharger (PDF, 2.5 Mo)
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endauth --}}
                     </div>
                 </div>
             </div>

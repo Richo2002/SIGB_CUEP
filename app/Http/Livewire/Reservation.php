@@ -24,7 +24,7 @@ class Reservation extends Component
 
     public function updatedSearchInput()
     {
-        $this->reservations = ModelsReservation::where('start_date', 'LIKE', '%'.$this->searchInput.'%')
+        $this->reservations = ModelsReservation::reservation()->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
                             ->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
                             ->orWhereHas('reader', function($query) {
                                 $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
@@ -52,7 +52,7 @@ class Reservation extends Component
     {
         if(!$this->searchInput)
         {
-            $this->reservations = ModelsReservation::paginate(10);
+            $this->reservations = ModelsReservation::reservation()->paginate(10);
             $this->reservationsLength = $this->reservations->total();
 
         }

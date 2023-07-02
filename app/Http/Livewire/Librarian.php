@@ -18,13 +18,15 @@ class Librarian extends Component
 
     public function updatedSearchInput()
     {
-        $this->librarians = User::where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->where('role', '=' ,'Bibliothécaire')
-                                    ->whereHas('institute', function($query) {
-                                        $query->where('name', 'LIKE', '%'.$this->searchInput.'%')
-                                        ->orWhere('address', 'LIKE', '%'.$this->searchInput.'%');
-                                        })->orderByDesc('id')->paginate(10);
+        $this->librarians = User::where('role', '=' ,'Bibliothécaire')
+            ->where('email', 'like', '%'. $this->searchInput. '%')
+            ->orWhere('phone_number', 'like', '%'.$this->searchInput.'%')
+            ->orWhere('lastname', 'like', '%'.$this->searchInput.'%')
+            ->orWhere('firstname', 'like', '%'.$this->searchInput.'%')
+            ->orWhereHas('institute', function($subQuery) {
+                $subQuery->where('name', 'like', '%'.$this->searchInput.'%')
+                ->orWhere('address', 'like', '%'.$this->searchInput.'%');
+                })->orderByDesc('id')->paginate(10);
     }
 
     public function paginationView()

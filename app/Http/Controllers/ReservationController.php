@@ -13,8 +13,8 @@ class ReservationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index']);
-        $this->middleware('librarianOrReader')->only(['index']);
+        $this->middleware('librarian')->except(['index', 'create', 'store']);
+        $this->middleware('librarianOrReader')->only(['index', 'create', 'store']);
     }
 
     /**
@@ -73,6 +73,18 @@ class ReservationController extends Controller
         $reader->reservations()->save($reservation);
 
         $reservation->resources()->attach(session('selections'));
+
+        foreach (session('selections') as $id) {
+
+            $resource = Resource::find($id);
+
+            if ($resource) {
+
+                $resource->available_number -= 1;
+
+                $resource->save();
+            }
+        }
 
         session()->forget('selections');
 

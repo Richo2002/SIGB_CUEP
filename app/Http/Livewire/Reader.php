@@ -22,7 +22,7 @@ class Reader extends Component
 
     public function updatedSearchInput()
     {
-        $this->readers = User::where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+        $this->readers = User::user()->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('npi', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('phone_number', 'LIKE', '%'.$this->searchInput.'%')
@@ -80,7 +80,7 @@ class Reader extends Component
     {
         if(!$this->searchInput)
         {
-            $this->readers = User::orderByDesc('id')
+            $this->readers = User::user()->orderByDesc('id')
                         ->where('role', '<>' ,'Bibliothécaire')
                         ->where('role', '<>' ,'Administrateur')
                         ->paginate(10);

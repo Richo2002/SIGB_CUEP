@@ -20,7 +20,7 @@ class AddLoanForm extends Component
 
         if($this->loaner == "Group")
         {
-            $groups = Group::whereHas('responsable', function($query) {
+            $groups = Group::group()->whereHas('responsable', function($query) {
                 $query->where('status', true);
             })->get();
         }

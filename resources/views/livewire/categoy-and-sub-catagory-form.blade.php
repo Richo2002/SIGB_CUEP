@@ -14,7 +14,7 @@
                     </select>
                 </div>
                 @error('category_id')
-                    <div class="col-12 text-danger">{{ $message }}</div>
+                    <div class="col-12 text-danger">Veuillez choisr le domaine de la ressource</div>
                 @enderror
             </div>
         </div>
@@ -33,7 +33,7 @@
                     </select>
                 </div>
                 @error('sub_category_id')
-                    <div class="col-12 text-danger">{{ $message }}</div>
+                    <div class="col-12 text-danger">Veuillez choisr le sous domaine de la ressource</div>
                 @enderror
             </div>
         </div>

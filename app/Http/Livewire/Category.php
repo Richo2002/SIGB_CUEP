@@ -20,7 +20,7 @@ class Category extends Component
 
     protected $rules = [
         'name' => 'string|max:150|unique:categories',
-        'classification_number' => 'required_if:has_name,1|regex:/^[0-9]+$/|unique:categories',
+        'classification_number' => 'required_with:name|regex:/^[0-9]+$/|unique:categories',
     ];
 
 

@@ -84,8 +84,8 @@ class InstituteController extends Controller
         $current_librarian_and_librarians_actif_without_institute = User::leftJoin('institutes', 'users.id', '=', 'institutes.librarian_id')
                     ->select('users.id', 'users.lastname', 'users.firstname')
                     ->whereNull('institutes.librarian_id')
-                    ->orWhere('users.id', $institute->user->id)
                     ->where([['users.role', 'Bibliothécaire'], ['users.status', true]])
+                    ->orWhere('users.id', $institute->user->id)
                     ->get();
 
         return view('add-institute', [

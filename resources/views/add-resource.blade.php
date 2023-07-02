@@ -82,7 +82,7 @@
                                                         <label class="input-group-text" for="ImageInput">Photo <span class="text-danger fw-bold">*</span></label>
                                                         <input type="file" class="form-control" id="ImageInput" name="cover_page" {{ isset($resource) ? '' : ' required ' }}>
                                                     </div>
-                                                    @error('photo')
+                                                    @error('cover_page')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
@@ -165,7 +165,7 @@
                                                         </select>
                                                     </div>
                                                     @error('type_id')
-                                                        <div class="col-12 text-danger">{{ $message }}</div>
+                                                        <div class="col-12 text-danger">Veuillez choisr le type de la ressource</div>
                                                     @enderror
                                                 </div>
                                             </div>

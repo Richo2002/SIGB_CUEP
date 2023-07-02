@@ -33,7 +33,7 @@ class ResourceRequest extends FormRequest
             'identification_number' => ['nullable' ,'regex:/^\d{10}$|^\d{13}$/', Rule::unique('resources')->ignore($id ?? null)],
             'registration_number' => ['required', 'integer', 'regex:/^[0-9]+$/', Rule::unique('resources')->ignore($id ?? null)],
             'title' => ['required', 'string', 'max:150'],
-            'cover_page' => ['image', 'max:2048', Rule::unique('resources')->ignore($id ?? null)],
+            'cover_page' => ['image', 'max:3072', Rule::unique('resources')->ignore($id ?? null)],
             'digital_version' => ['nullable','file', 'mimes:pdf,mp4,mp3'],
             'copies_number' => ['required', 'integer', 'regex:/^[0-9]+$/'],
             'page_number' => ['required', 'integer', 'regex:/^[0-9]+$/'],

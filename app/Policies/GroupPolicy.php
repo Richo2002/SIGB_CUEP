@@ -19,15 +19,7 @@ class GroupPolicy
      */
     public function view(User $user, Group $group)
     {
-        $responsable = $group->responsable()->first();
-
-        $registration = $responsable->registrations();
-
-        $registration = $responsable->registrations()->where('start_date', '<=', $group->created_at)
-            ->where('end_date', '>', $group->created_at)
-            ->first();
-
-        if ($registration && $registration->institute_id == $user->institute()->first()->id) {
+        if ($group->institute_id == $user->institute()->first()->id) {
             return true;
         }
 
@@ -43,15 +35,7 @@ class GroupPolicy
      */
     public function update(User $user, Group $group)
     {
-        $responsable = $group->responsable()->first();
-
-        $registration = $responsable->registrations();
-
-        $registration = $responsable->registrations()->where('start_date', '<=', $group->created_at)
-            ->where('end_date', '>', $group->created_at)
-            ->first();
-
-        if ($registration && $registration->institute_id == $user->institute()->first()->id) {
+        if ($group->institute_id == $user->institute()->first()->id) {
             return true;
         }
 

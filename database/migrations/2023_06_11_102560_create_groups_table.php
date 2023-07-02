@@ -20,6 +20,9 @@ class CreateGroupsTable extends Migration
 
             $table->unsignedBigInteger('responsable_id');
             $table->foreign('responsable_id')->references('id')->on('users');
+
+            $table->unsignedBigInteger('institute_id');
+            $table->foreign('institute_id')->references('id')->on('institutes');
         });
     }
 

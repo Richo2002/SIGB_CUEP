@@ -99,6 +99,9 @@
             </a>
         </li>
 
+    @endif
+
+    @if (Auth::user()->role!="Bibliothécaire" && Auth::user()->role!="Administrateur")
         <li class="nav-item">
             <a class="nav-link" href="/groups">
                 <i class="fa-solid fa-book"></i>

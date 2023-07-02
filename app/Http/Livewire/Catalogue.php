@@ -7,7 +7,6 @@ use Livewire\Component;
 use App\Models\Category;
 use App\Models\Resource;
 use App\Models\SubCategory;
-use Livewire\WithPagination;
 
 class Catalogue extends Component
 {
@@ -69,11 +68,6 @@ class Catalogue extends Component
     public function showDetails($id)
     {
         $this->resourceDetails = Resource::where('id', intval($id))->first();
-    }
-
-    public function paginationView()
-    {
-        return 'livewire.pagination';
     }
 
 

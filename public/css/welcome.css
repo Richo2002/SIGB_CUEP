@@ -50,12 +50,6 @@
     color: rgba(34, 88, 166);
 }
 
-/* .card-img-top
-{
-    height: 200px;
-    object-fit: contain !important;
-} */
-
 
 #catalog
 {
@@ -88,10 +82,6 @@ footer
 }
 
 
-.swiper {
-    max-height: 300px;
-}
-
 .swiper-button-next::after, .swiper-button-prev::after {
   color: rgba(34, 88, 166) !important;
   font-weight: bold !important;
@@ -100,3 +90,15 @@ footer
 .swiper-button-disabled {
   opacity: 0.3;
 }
+
+.swiper {
+    width: 100%;
+    height: 90%;
+}
+
+  .swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }

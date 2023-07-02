@@ -61,16 +61,20 @@ class GroupController extends Controller
     {
         $request->validate([
             'name' => ['string', 'max:100', Rule::unique('groups')->ignore($id ?? null)],
-            'responsable_id' => 'required_if:has_name,1',
+            'responsable_id' => 'required_with:name',
         ]);
 
         $group = Group::findOrFail($id);
 
         $this->authorize('update', $group);
 
+        $group->readers()->attach($group->responsable_id);
+        $group->readers()->detach($request->responsable_id);
+
         $group->name = $request->name;
         $group->responsable_id = $request->responsable_id;
         $group->save();
+
 
         return redirect()->route('groups.index')->with(['message' => 'Mis à jour réussie']);
     }

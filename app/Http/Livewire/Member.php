@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Auth;
 
 class Member extends Component
 {
@@ -62,13 +63,15 @@ class Member extends Component
 
     public function render()
     {
-
-        $readers = User::whereDoesntHave('groups', function ($query) {
-                    $query->where('groups.id', $this->group->id);
-                })->WhereDoesntHave('group', function ($query) {
-                    $query->where('id', $this->group->id);
-                })->where([['role', '<>', 'Administrateur'], ['role', '<>', 'Bibliothécaire']])
-                ->get();
+        if(Auth::user()->role==="Bibliothécaire")
+        {
+            $readers = User::user()->whereDoesntHave('groups', function ($query) {
+                $query->where('groups.id', $this->group->id);
+            })->WhereDoesntHave('group', function ($query) {
+                $query->where('id', $this->group->id);
+            })->where([['role', '<>', 'Administrateur'], ['role', '<>', 'Bibliothécaire']])
+            ->get();
+        }
 
         if(!$this->searchInput)
         {
@@ -81,7 +84,7 @@ class Member extends Component
 
 
         return view('livewire.member', [
-            'readers' => $readers,
+            'readers' => $readers ?? null,
             'members' => $this->members,
         ]);
     }

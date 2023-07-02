@@ -70,7 +70,7 @@
                         @foreach ($resources as $index => $resource)
                             <tr>
                                 <td>
-                                    <input x-model="selections" type="checkbox" value="{{ $resource->id }}" {{ ($resource->available_number > 0 && $resource->status == true && $hasNoActiveReservation == true) ? '' : 'disabled' }}>
+                                    <input x-model="selections" type="checkbox" value="{{ $resource->id }}" {{ ($resource->available_number > 0 && $resource->status == true && $hasNoActiveReservation == true && $currentInstitute == $resource->institute_id) ? '' : 'disabled' }}>
                                 </td>
                                 <td>{{ $resource->id }}</td>
                                 <td>

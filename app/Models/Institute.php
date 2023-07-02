@@ -11,7 +11,6 @@ class Institute extends Model
 
     protected $fillable = [
         'name',
-        // 'description',
         'address',
         'librarian_id'
     ];
@@ -39,5 +38,14 @@ class Institute extends Model
     public function resources()
     {
         return $this->hasMany(Resource::class);
+    }
+
+
+    /**
+     * Get the groups created by the institute.
+    */
+    public function groups()
+    {
+        return $this->hasMany(Group::class);
     }
 }

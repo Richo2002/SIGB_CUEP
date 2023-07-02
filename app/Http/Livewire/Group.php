@@ -2,10 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Group as Team;
 use App\Models\User;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Group as Team;
+use Illuminate\Support\Facades\Auth;
 
 class Group extends Component
 {
@@ -20,7 +21,7 @@ class Group extends Component
 
     protected $rules = [
         'name' => 'string|max:100|unique:groups',
-        'responsable_id' => 'required_if:has_name,1',
+        'responsable_id' => 'required_with:name',
     ];
 
 
@@ -30,9 +31,12 @@ class Group extends Component
         {
             $this->validate();
 
+            $user = User::find(Auth::user()->id);
+
             Team::create([
                 'name' => $this->name,
-                'responsable_id' => $this->responsable_id
+                'responsable_id' => $this->responsable_id,
+                'institute_id' => $user->institute->id,
             ]);
 
             $this->name = "";
@@ -52,7 +56,7 @@ class Group extends Component
 
     public function updatedSearchInput()
     {
-        $this->groups = Team::where('name', 'LIKE', '%'.$this->searchInput.'%')
+        $this->groups = Team::group()->where('name', 'LIKE', '%'.$this->searchInput.'%')
                             ->orWhereHas('responsable', function($query) {
                                 $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
                                 ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
@@ -62,6 +66,7 @@ class Group extends Component
     public function delete(int $currentGroupId)
     {
         $group = Team::findOrFail($currentGroupId);
+        $group->readers()->detach();
         $group->delete();
 
         session()->flash('message', 'Suppression réussie');
@@ -74,21 +79,24 @@ class Group extends Component
     public function render()
     {
 
-        $readers = User::where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire']])
+        if(Auth::user()->role==="Bibliothécaire")
+        {
+            $readers = User::user()->where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire']])
             ->whereDoesntHave('group')
             ->orderBy('lastname')
             ->get();
+        }
 
         if(!$this->searchInput)
         {
-            $this->groups = Team::orderByDesc('id')->paginate(10);
+            $this->groups = Team::group()->orderByDesc('id')->paginate(10);
             $this->groupsLength = $this->groups->total();
 
         }
 
 
         return view('livewire.group', [
-            'readers' => $readers,
+            'readers' => $readers ?? null,
             'groups' => $this->groups
         ]);
     }

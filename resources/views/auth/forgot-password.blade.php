@@ -43,16 +43,29 @@
                                         <p class="mb-4">On comprend, il se passe des choses. Entrez simplement votre adresse e-mail ci-dessous
                                             et nous vous enverrons un lien pour réinitialiser votre mot de passe !</p>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="POST" action="/forgot-password">
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
                                                 placeholder="Entrer l'adresse e-mail..." name="email" required autofocus>
                                         </div>
-                                        <a href="login.html" class="btn btn-user btn-block">
+                                        @error('email')
+                                            <div class="alert alert-danger mt-3">{{ $message }}</div>
+                                        @enderror
+                                        @if (session()->has('email'))
+                                            <div class="alert alert-success">
+                                                {{ session('email') }}
+                                            </div>
+                                        @endif
+                                        @if (session()->has('status'))
+                                            <div class="alert alert-success">
+                                                {{ session('status') }}
+                                            </div>
+                                        @endif
+                                        <button type="submit" class="btn btn-user btn-block">
                                             Réinitialiser le mot de passe
-                                        </a>
+                                        </button>
                                     </form>
                                     <hr>
                                     <div class="text-center">

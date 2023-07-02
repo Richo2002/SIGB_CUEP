@@ -19,6 +19,7 @@ class Resource extends Component
     public $selections = [];
     public $hasNoActiveReservation = true;
     public $resourcesLength;
+    public $currentInstitute;
 
 
     protected $resources;
@@ -28,17 +29,25 @@ class Resource extends Component
 
     public function mount()
     {
+        $user = User::find(Auth::user()->id);
+
         if(Auth::user()->role!="Bibliothécaire")
         {
-            $user = User::find(Auth::user()->id);
             $lastReservation = $user->reservations()->latest()->first();
             $this->hasNoActiveReservation = $lastReservation ? $lastReservation->where('status', '<>', 'En cour')->exists() : true;
+
+            $registration = $user->registrations()->latest()->first();
+            $this->currentInstitute = $registration->institute_id;
+        }
+        else
+        {
+            $this->currentInstitute = $user->institute->id;
         }
     }
 
     public function updatedSearchInput()
     {
-        $this->resources = ModelsResource::where('identification_number', 'LIKE', '%'.$this->searchInput.'%')
+        $this->resources = ModelsResource::resource()->where('identification_number', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('registration_number', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('title', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('authors', 'LIKE', '%'.$this->searchInput.'%')
@@ -110,7 +119,7 @@ class Resource extends Component
     {
         if(!$this->searchInput)
         {
-            $this->resources = ModelsResource::paginate(10);
+            $this->resources = ModelsResource::resource()->paginate(10);
             $this->resourcesLength = $this->resources->total();
         }
 

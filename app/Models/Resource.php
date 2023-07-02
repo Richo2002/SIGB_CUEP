@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Resource extends Model
 {
@@ -65,5 +67,19 @@ class Resource extends Model
     public function loans()
     {
         return $this->belongsToMany(Loan::class);
+    }
+
+    public function scopeResource(Builder $query)
+    {
+        $user = User::find(Auth::user()->id);
+
+        if($user->role === "Bibliothécaire")
+        {
+            $query->where('institute_id', $user->institute()->first()->id);
+        }
+        else
+        {
+            $query;
+        }
     }
 }
