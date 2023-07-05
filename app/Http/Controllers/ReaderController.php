@@ -98,4 +98,22 @@ class ReaderController extends Controller
 
         return redirect()->route('readers.index')->with(['message' => 'Mis à jour réussie']);
     }
+
+    public function disableReader()
+    {
+        $today = Carbon::today();
+
+        $readers = User::where('role', '<>' ,'Administrateur')
+                        ->where('role', '<>' ,'Bibliothécaire')
+                        ->where('status','true')
+                        ->whereHas('registrations', function($query) use($today){
+                            $query->where('end_date', '<', $today)
+                            ->orderByDesc('id')
+                            ->limit(1);
+                        })->get();
+
+        foreach ($readers as $reader) {
+            $reader->update(['status' => false]);
+        }
+    }
 }

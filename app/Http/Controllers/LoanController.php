@@ -111,4 +111,17 @@ class LoanController extends Controller
 
         return redirect()->route('loans.index')->with(['message' => 'Enregistrement réussi']);
     }
+
+
+    public function manageDelays()
+    {
+        $today = Carbon::today();
+        $loans = Loan::where('end_date', '<', $today)
+                ->where('status', 'En cour')
+                ->get();
+
+        foreach ($loans as $loan) {
+            $loan->update(['status' => "Retard"]);
+        }
+    }
 }

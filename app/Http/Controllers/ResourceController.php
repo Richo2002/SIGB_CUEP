@@ -68,7 +68,7 @@ class ResourceController extends Controller
 
         $resource = Resource::create([
             'identification_number' => $request->identification_number,
-            'registration_number' => $request->identification_number,
+            'registration_number' => $request->registration_number,
             'title' => $request->title,
             'cover_page' => $path_image_convert_to_table[2],
             'digital_version' => $request->has('digital_version') ? $path_digital_version_convert_to_table[2] : null,

@@ -28,7 +28,7 @@ class ContactUs extends Component
             'message' => $this->message,
         ];
 
-        Mail::to('cuep@gmail.com')->send(new MailContactUs($user));
+        Mail::to('mesrs.cuepinfos@gouv.bj')->send(new MailContactUs($user));
 
         session()->flash('message', 'Votre e-mail a été envoyé avec succès !');
 

@@ -11,7 +11,6 @@ use App\Models\SubCategory;
 class Catalogue extends Component
 {
     protected $resources = [];
-    protected $modelResource;
 
     public $typeSelect;
     public $subCategorySelect;
@@ -19,12 +18,6 @@ class Catalogue extends Component
     public $resourceDetails;
     public $categorySelect;
     public $subCategories = [];
-
-    public function mount()
-    {
-        $this->modelResource = Resource::orderByDesc('id')->get();
-    }
-
 
     public function sortOrSearchResource()
     {
@@ -56,6 +49,8 @@ class Catalogue extends Component
         }
 
         $this->resources = $resourcesQuery->orderByDesc('id')->get();
+
+        $this->dispatchBrowserEvent('contentChanged');
     }
 
 

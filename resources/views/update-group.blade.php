@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Group</title>
+    <title>CUEP | Group</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -18,6 +18,8 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" href="{{ asset('logo_cuep.ico') }}" type="image/x-icon">
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
@@ -70,7 +72,7 @@
                                 @csrf
                                 @method('PUT')
                                 <div class="row mb-3">
-                                    <div class="col-lg-6 col-12">
+                                    <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                         <div class="row">
                                             <div class="col-12 input-group">
                                                 <span class="input-group-text" id="basic-addon1">Groupe</span>

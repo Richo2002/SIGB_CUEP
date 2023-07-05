@@ -90,4 +90,18 @@ class ReservationController extends Controller
 
         return redirect()->route('reservations.index')->with(['message' => 'Enregistrement réussi']);
     }
+
+    public function manageDelays()
+    {
+        $today = Carbon::today();
+        $reservations = Reservation::where('end_date', '<', $today)
+                ->where('status', 'En cour')
+                ->get();
+
+        foreach ($reservations as $reservation) {
+            $reservation->update(['status' => "Expiré"]);
+        }
+
+        dd($reservations);
+    }
 }

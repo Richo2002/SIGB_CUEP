@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profiles/{profile}/edit', [MainController::class, 'editProfile']);
     Route::put('/profiles/{profile}', [MainController::class, 'updateProfile']);
 
+    Route::get('/test', [ReservationController::class, 'manageDelays']);
+
 });
 
 

@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user"
                                                 id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Entrer l'adresse e-mail..." name="email" required autofocus>
+                                                placeholder="Entrer l'adresse e-mail..." name="email" required autofocus value="{{ old('email') }}">
                                         </div>
                                         @error('email')
                                             <div class="alert alert-danger mt-3">{{ $message }}</div>

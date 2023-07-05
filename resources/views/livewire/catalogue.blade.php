@@ -1,13 +1,13 @@
 <div>
     <section id="catalog" class="container mb-5">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 mb-3">
                 <div class="row">
                   <div class="col">
                     <h6 class="catalog-title btn">Catalogue</h6>
                   </div>
                   <div class="col-12">
-                    <div class="row row-cols-lg-2 row-cols-1">
+                    <div class="row row-cols-lg-2 row-cols-1 mb-3">
                         <div class="col mb-3">
                             <select class="form-select" id="filter-type" wire:model="typeSelect" wire:change="sortOrSearchResource">
                               <option value="" >Tous les types</option>
@@ -35,7 +35,7 @@
                             </select>
                           </div>
                           <div class="col mb-3">
-                            <input type="text" class="form-control" id="filter-author" placeholder="Rechercher" wire:model.debounce.150ms="searchInput">
+                            <input type="text" class="form-control" id="filter-author" placeholder="Rechercher par mot clé" wire:model.debounce.150ms="searchInput">
                           </div>
                         </div>
                     </div>
@@ -46,17 +46,13 @@
                     <div class="swiper">
                         <div class="swiper-wrapper">
                             @foreach ($resources as $resource)
-                                <div class="swiper-slide" wire:click.prevent="showDetails({{ $resource->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" wire:key="{{ $resource->id }}">
-                                    <a href="">
-                                        <img src="{{ '/storage/coverPages/'.$resource->cover_page }}" height="250" width="250">
-                                    </a>
-                                </div>
+                                <img class="swiper-slide" wire:click.prevent="showDetails({{ $resource->id }})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" wire:key="{{ $resource->id }}" src="{{ '/storage/coverPages/'.$resource->cover_page }}">
                             @endforeach
                         </div>
-                        <div class="swiper-pagination"></div>
 
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next custom-swiper-button"></div>
+                        <div class="swiper-button-prev custom-swiper-button"></div>
+                        {{-- <div class="swiper-pagination"></div> --}}
                     </div>
                 @else
                     <h6 class="error text-center mt-5">Nous sommes désolés, mais la ressource que vous recherchez n'est pas encore disponible dans notre bibliothèque. Elle n'a surement pas encore été enregistrée. Veuillez vérifier ultérieurement pour voir si elle est disponible.</h6>
@@ -75,19 +71,16 @@
                 </div>
                 <div class="modal-body">
                     <div class="card">
-                        <div class="card-header">
-                            <h6 class="card-title">{{ $resourceDetails ? $resourceDetails->title : ""}}</h6>
-                        </div>
                         <img src="{{ $resourceDetails ? '/storage/coverPages/'.$resourceDetails->cover_page : ""}}" alt="Photo de la ressource">
                         <div class="card-body">
-                            <p class="card-text">Numéro d'identification : {{ $resourceDetails ? $resourceDetails->identification_number : ""}}</p>
-                            <p class="card-text">Auteur :{{ $resourceDetails ? $resourceDetails->authors : ""}}</p>
-                            <p class="card-text">Type : {{ $resourceDetails ? $resourceDetails->type->name : ""}}</p>
-                            <p class="card-text">Sous Domaine : {{ $resourceDetails ? $resourceDetails->sub_category->name : ""}}</p>
-                            <p class="card-text">Édition : {{ $resourceDetails ? $resourceDetails->edition : ""}}</p>
-                            <p class="card-text">Localisation : {{ $resourceDetails ? $resourceDetails->institute->name : ""}}</p>
-                            <p class="card-text">Nombre d'exemplaires : {{ $resourceDetails ? $resourceDetails->copies_number : ""}}</p>
-                            <p class="card-text">Nombre disponibles : {{ $resourceDetails ? $resourceDetails->available_number : ""}}</p>
+                            <p class="card-title"><b>Titre</b> : {{ $resourceDetails ? $resourceDetails->title : ""}}</p>
+                            <p class="card-text"><b>Auteur</b> :{{ $resourceDetails ? $resourceDetails->authors : ""}}</p>
+                            <p class="card-text"><b>Type</b> : {{ $resourceDetails ? $resourceDetails->type->name : ""}}</p>
+                            <p class="card-text"><b>Sous Domaine</b> : {{ $resourceDetails ? $resourceDetails->sub_category->name : ""}}</p>
+                            <p class="card-text"><b>Édition</b> : {{ $resourceDetails ? $resourceDetails->edition : ""}}</p>
+                            <p class="card-text"><b>Localisation</b> : {{ $resourceDetails ? $resourceDetails->institute->name : ""}}</p>
+                            <p class="card-text"><b>Nombre d'exemplaires</b> : {{ $resourceDetails ? $resourceDetails->copies_number : ""}}</p>
+                            <p class="card-text"><b>Nombre disponibles</b> : {{ $resourceDetails ? $resourceDetails->available_number : ""}}</p>
                         </div>
                     </div>
                 </div>

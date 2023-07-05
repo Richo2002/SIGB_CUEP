@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Lecteur</title>
+    <title>CUEP | Lecteur</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -18,6 +18,8 @@
         rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="icon" href="{{ asset('logo_cuep.ico') }}" type="image/x-icon">
 
     <!-- Custom styles for this template-->
     <link href="/css/sb-admin-2.min.css" rel="stylesheet">
@@ -115,7 +117,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="row mb-lg-3">
+                                        <div class="row mb-3">
                                             <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
@@ -131,10 +133,10 @@
                                             <div class="col-lg-6 col-12">
                                                 <div class="row">
                                                     <div class="col-12 input-group d-flex">
-                                                        <label class="input-group-text" for="inputGroupSelect01">Type<span class="text-danger fw-bold">*</span></label>
+                                                        <label class="input-group-text" for="inputGroupSelect01">Catégorie<span class="text-danger fw-bold">*</span></label>
                                                         <select class="form-select flex-grow-1" id="inputGroupSelect01" name="role">
                                                             @if (!isset($reader))
-                                                                <option value="">Choisir son type</option>
+                                                                <option value="">Choisir sa catégorie</option>
                                                             @endif
                                                                 <option {{ (isset($reader) && ($reader->role == "Etudiant")) ? 'selected' : '' }} value="Etudiant">Etudiant</option>
                                                                 <option {{ (isset($reader) && ($reader->role == "Professeur")) ? 'selected' : '' }} value="Professeur">Professeur</option>
