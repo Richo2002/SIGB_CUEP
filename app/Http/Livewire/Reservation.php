@@ -29,7 +29,8 @@ class Reservation extends Component
                             ->orWhereHas('reader', function($query) {
                                 $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
                                 ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
-                            })->paginate(10);
+                            })->orderByDesc('id')
+                            ->paginate(10);
     }
 
     public function getReservedResources($currentReservationId)
@@ -52,7 +53,7 @@ class Reservation extends Component
     {
         if(!$this->searchInput)
         {
-            $this->reservations = ModelsReservation::reservation()->paginate(10);
+            $this->reservations = ModelsReservation::reservation()->orderByDesc('id')->paginate(10);
             $this->reservationsLength = $this->reservations->total();
 
         }

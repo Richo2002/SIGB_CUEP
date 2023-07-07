@@ -70,6 +70,7 @@ class Member extends Component
             })->WhereDoesntHave('group', function ($query) {
                 $query->where('id', $this->group->id);
             })->where([['role', '<>', 'Administrateur'], ['role', '<>', 'Bibliothécaire']])
+            ->orderByDesc('lastname')
             ->get();
         }
 
@@ -77,7 +78,8 @@ class Member extends Component
         {
             $this->members = User::whereHas('groups', function($query) {
                 $query->where('groups.id', $this->group->id);
-            })->paginate(10);
+            })->orderByDesc('id')
+            ->paginate(10);
 
             $this->membersLength = $this->members->total();
         }

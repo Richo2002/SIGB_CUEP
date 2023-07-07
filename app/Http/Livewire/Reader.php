@@ -49,7 +49,7 @@ class Reader extends Component
         }
         else
         {
-            $registration = Registration::where('reader_id', $reader->id)->orderByDesc('id')->first();
+            $registration = Registration::where('reader_id', $reader->id)->first();
 
             if($registration->status == false)
             {

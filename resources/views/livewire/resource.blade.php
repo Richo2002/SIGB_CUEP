@@ -78,7 +78,7 @@
                                         <img src="{{ '/storage/coverPages/'.$resource->cover_page }}" width="50px" height="50px" alt="" style="object-fit: contain">
                                     </div>
                                 </td>
-                                <td>{{ $resource->title }}</td>
+                                <td>{{ Str::words($resource->title, 10, ' ...') }}</td>
                                 <td>{{ $resource->sub_category->name }}</td>
                                 <td>{{ $resource->type->name }}</td>
                                 <td>{{ $resource->authors }}</td>
@@ -160,7 +160,7 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.download(currentResourceDigitalVersion)" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.download(currentResourceDigitalVersion)" wire:loading.attr="disabled" class="btn btn-logout">
                         Télercharger
                     </button>
                 </div>

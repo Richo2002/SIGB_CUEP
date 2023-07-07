@@ -21,6 +21,6 @@ class Category extends Model implements Auditable
      */
     public function sub_categories()
     {
-        return $this->hasMany(SubCategory::class);
+        return $this->hasMany(SubCategory::class)->orderBy('name', 'asc');
     }
 }

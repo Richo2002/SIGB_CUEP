@@ -60,7 +60,8 @@ class Group extends Component
                             ->orWhereHas('responsable', function($query) {
                                 $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
                                 ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
-                            })->paginate(10);
+                            })->orderByDesc('id')
+                            ->paginate(10);
     }
 
     public function delete(int $currentGroupId)
@@ -83,7 +84,7 @@ class Group extends Component
         {
             $readers = User::user()->where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire']])
             ->whereDoesntHave('group')
-            ->orderBy('lastname')
+            ->orderByDesc('lastname')
             ->get();
         }
 

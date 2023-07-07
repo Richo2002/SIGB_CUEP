@@ -6,15 +6,18 @@
     <title>CUEP | Accueil</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/welcome.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/footer.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
     <link rel="icon" href="{{ asset('logo_cuep.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @livewireStyles
   </head>
   <body id="page-top">
     <section class="welcome max-vh-100 pb-4 mb-5" id="home">
         <nav class="navbar fixed-top navbar-expand-lg scrollspy">
             <div class="container">
-                <a class="navbar-brand" href="/">
+                <a class="navbar-brand" href="#home">
                     <img src="/img/logo_cuep.png" alt="Bootstrap" width="150" height="80">
                 </a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +26,7 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#home">Accueil</a>
+                    <a class="nav-link active" aria-current="page" href="/#home">Accueil</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#catalog">Catalogue</a>
@@ -44,40 +47,25 @@
               </div>
             </div>
         </nav>
-
         <div class="container-fluid">
             <div id="carouselExampleCaptions" class="carousel slide mx-md-3" data-bs-ride="carousel">
-                <div class="carousel-indicators">
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                  <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
-
-                </div>
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img src="/img/b2.jpg" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>Notre Bibliothèque Numérique</h5>
-                      <p>Une vaste collection de ressources provenant de nos instituts</p>
+                      <p>Une vaste collection de ressources techniques et économiques destinées aux professionnels en activité et en formation.</p>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <img src="/img/b3.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
-                      <h5>Réservez et Empruntez</h5>
-                      <p>Connectez-vous pour réserver, emprunter ou télécharger des ressources en toute sécurité.</p>
+                        <h5>Explorez notre Catalogue</h5>
+                        <p>Des Lives, des documents numériques et bien d'autres ressources à découvrir.</p>
                     </div>
                   </div>
                   <div class="carousel-item">
                     <img src="/img/b4.png" class="d-block w-100" alt="...">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Notre Bibliothèque Numérique</h5>
-                        <p>Une vaste collection de ressources provenant de nos instituts</p>
-                    </div>
-                  </div>
-                  <div class="carousel-item">
-                    <img src="/img/b2.png" class="d-block w-100" alt="...">
                     <div class="carousel-caption d-none d-md-block">
                       <h5>Réservez et Empruntez</h5>
                       <p>Connectez-vous pour réserver, emprunter ou télécharger des ressources en toute sécurité.</p>
@@ -88,10 +76,67 @@
         </div>
     </section>
 
-    @livewire('catalogue')
+    <section id="catalog" class="container mb-5">
+        <div class="row">
+            <div class="col-12">
+                <h6 class="catalog-title btn">Catalogue</h6>
+            </div>
+            <div class="col-lg-6 col-12 mb-lg-0 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Types</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (count($types)  > 0)
+                            <ul class="list-group">
+                                @foreach ($types as $type)
+                                    <li class="list-group-item"><i class="fa-solid fa-folder me-2"></i> <a href="/resources/types/{{ $type->id }}" class="text-decoration-none">{{ $type->name }}</a></li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p class="text-danger">Aucun Type de resource enregistré pour le moment.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">Categories</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (count($categories)  > 0)
+                            <div class="accordion" id="accordionExample">
+                                @foreach ($categories as $category)
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingTwo{{ $category->id }}">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo{{ $category->id }}" aria-expanded="false" aria-controls="collapseTwo">
+                                            <i class="fa-solid fa-folder me-2"></i> {{ $category->name }}
+                                        </button>
+                                        </h2>
+                                        <div id="collapseTwo{{ $category->id }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ $category->id }}" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <ul class="list-group">
+                                                @foreach ($category->sub_categories as $sub_category)
+                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}" class="text-decoration-none">{{ $sub_category->name }}</a></li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @else
+                            <p class="text-danger">Aucune Catégorie de ressource enregistré pour le moment.</p>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Form Section -->
-    <section class="container mb-5 py-2" id="contact">
+    <section class="container mb-3" id="contact">
         <div class="row row-cols-lg-2 row-cols-1">
             <div class="col">
                 <div class="row d-flex flex-column align-items-center">
@@ -113,15 +158,8 @@
         </div>
     </section>
 
-    <!-- Footer Section -->
-    <footer class="container-fluid text-center py-3">
-        <p class="mb-0">© 2023 CUEP. Tous droits réservés.</p>
-    </footer>
+    @include('layouts.welcome.footer')
 
-    <!-- Scroll to Top Button-->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>

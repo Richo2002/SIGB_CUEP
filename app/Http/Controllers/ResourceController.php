@@ -10,6 +10,7 @@ use App\Models\Institute;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\Http\Requests\ResourceRequest;
 use Illuminate\Support\Facades\Storage;
 
@@ -17,7 +18,7 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index', 'edit']);
+        $this->middleware('librarian')->except(['index', 'edit', 'indexTypes', 'indexCategorySubCategories', 'show', 'download']);
         $this->middleware('librarianOrReader')->only(['index', 'edit']);
     }
 
@@ -171,5 +172,42 @@ class ResourceController extends Controller
         $resource->save();
 
         return redirect()->route('resources.index')->with(['message' => 'Mis à jour réussie']);
+    }
+
+    public function indexTypes($id)
+    {
+        $type = Type::findOrFail($id);
+        $type_name = $type->pluck('name')->first();
+
+        return view('typeOrSubCategoryResources', [
+            'type_name' => $type_name,
+            'id' => $id,
+            'column' => 'type_id',
+        ]);
+    }
+
+    public function indexCategorySubCategories($id)
+    {
+        $subCategory = SubCategory::findOrFail($id);
+
+        return view('typeOrSubCategoryResources', [
+            'subCategory' => $subCategory,
+            'id' => $id,
+            'column' => 'sub_category_id',
+        ]);
+    }
+
+    public function show($id)
+    {
+        return view('showResource', [
+            'id' => $id,
+        ]);
+    }
+
+    public function download($id)
+    {
+        $resource = Resource::findOrFail($id);
+
+        return Storage::download('public/digitalVersions/'.$resource->digital_version);
     }
 }

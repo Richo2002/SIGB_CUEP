@@ -54,7 +54,14 @@ class Loan extends Model implements Auditable
         {
             $query->whereHas('resources', function($query) use($user) {
                 $query->where('resources.institute_id', $user->institute()->first()->id);
-            });
+            })->orderByRaw("
+                CASE
+                    WHEN status = 'Retard' THEN 1
+                    WHEN status = 'En cour' THEN 2
+                    WHEN status = 'Terminé' THEN 3
+                    ELSE 4
+                END
+            ");
         }
         else
         {
@@ -67,7 +74,14 @@ class Loan extends Model implements Auditable
                         $subSubQuery->where('users.id', $user->id);
                     });
                 });
-            });
+            })->orderByRaw("
+                CASE
+                    WHEN status = 'Retard' THEN 1
+                    WHEN status = 'En cour' THEN 2
+                    WHEN status = 'Terminé' THEN 3
+                    ELSE 4
+                END
+            ");
         }
     }
 

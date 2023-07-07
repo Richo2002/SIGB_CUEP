@@ -28,9 +28,12 @@ use App\Http\Controllers\SubCategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MainController::class, 'welcome']);
+
+Route::get('resources/types/{id}', [ResourceController::class, 'indexTypes']);
+Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
+
+Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resources.show');
 
 Route::get('/resource-details', function () {
     return view('resource-details');
@@ -42,23 +45,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', [MainController::class, 'dashboard'])->name('dashboard');
 
-    // Route::resources([
-    //     'librarians' => LibrarianController::class,
-    //     'institutes' => InstituteController::class,
-    //     'resources' => ResourceController::class,
-    //     'types' => TypeController::class,
-    //     'categories' => CategoryController::class,
-    //     'sub-categories' => SubCategoryController::class,
-    //     'readers' => ReaderController::class,
-    //     'groups' => GroupController::class,
-    //     'groups.members' => MemberController::class,
-    //     'loans' => LoanController::class,
-    //     'reservations' => ReservationController::class
-    // ]);
-
     Route::resource('librarians', LibrarianController::class)->except(['show', 'destroy']);
     Route::resource('institutes', InstituteController::class)->except(['show', 'destroy']);
-    Route::resource('resources', ResourceController::class)->except(['show', 'destroy']);
+    Route::resource('resources', ResourceController::class)->except(['destroy', 'show']);
     Route::resource('types', TypeController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('categories', CategoryController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('sub-categories', SubCategoryController::class)->except(['show', 'destroy']);
@@ -68,11 +57,13 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('loans', LoanController::class)->except(['show', 'edit', 'update', 'destroy']);
     Route::resource('reservations', ReservationController::class)->except(['show', 'edit', 'update', 'destroy']);
 
+
     Route::get('/profiles/{profile}/edit', [MainController::class, 'editProfile']);
     Route::put('/profiles/{profile}', [MainController::class, 'updateProfile']);
 
     Route::get('/test', [ReservationController::class, 'manageDelays']);
 
+    Route::post('resources/{id}/download', [ResourceController::class, 'download']);
 });
 
 

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loan;
+use App\Models\Type;
 use App\Models\User;
+use App\Models\Category;
 use App\Models\Institute;
 use App\Models\Reservation;
+
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
@@ -118,6 +120,17 @@ class MainController extends Controller
 
         return view('profile', [
             'user' => $user
+        ]);
+    }
+
+    public function welcome()
+    {
+        $types = Type::orderBy('name')->get();
+        $categories = Category::orderBy('name')->get();
+
+        return view('welcome', [
+            'types' => $types,
+            'categories' => $categories,
         ]);
     }
 }

@@ -101,7 +101,7 @@ class Resource extends Component
         $resource = ModelsResource::where('id', $currentResourceId)->firstOrFail();
 
         $this->size = Storage::size('public/digitalVersions/'.$resource->digital_version);
-        $this->size = round($this->size / 1048576, 2);
+        $this->size = round($this->size / 1048576, 5);
         $this->extension = File::extension('public/digitalVersions/'.$resource->digital_version);
     }
 
@@ -119,7 +119,7 @@ class Resource extends Component
     {
         if(!$this->searchInput)
         {
-            $this->resources = ModelsResource::resource()->paginate(10);
+            $this->resources = ModelsResource::resource()->orderByDesc('id')->paginate(10);
             $this->resourcesLength = $this->resources->total();
         }
 
