@@ -16,5 +16,6 @@ return [
     'failed' => 'Ces informations d\'identification ne correspondent pas à nos enregistrements.',
     'password' => 'Le mot de passe fourni est incorrect.',
     'throttle' => 'Trop de tentatives de connexion. Veuillez essayer de nouveau dans :seconds secondes.',
-
+    'account_disabled' => "Votre compte a été désactivé. Veuillez vous rapprocher de votre bibliothèque pour l'activation.",
+    'account_no_lie' => "Votre compte n'est pas encore lié à un institut. Veuillez réessayer ultérieurement si tout est en ordre.",
 ];

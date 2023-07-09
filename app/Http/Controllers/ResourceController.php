@@ -203,11 +203,4 @@ class ResourceController extends Controller
             'id' => $id,
         ]);
     }
-
-    public function download($id)
-    {
-        $resource = Resource::findOrFail($id);
-
-        return Storage::download('public/digitalVersions/'.$resource->digital_version);
-    }
 }

@@ -166,6 +166,10 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+
+        'password' => [
+            'regex' => 'Le mot de passe doit contenir au moins une lettre, un chiffre et un caractère spécial.',
+        ],
     ],
 
     /*

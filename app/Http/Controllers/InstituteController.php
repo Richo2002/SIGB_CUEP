@@ -108,7 +108,7 @@ class InstituteController extends Controller
         $institute->name = $request->name;
         $institute->address = $request->address;
 
-        // $institute->librarian_id = intval($request->librarian_id);
+        $institute->librarian_id = intval($request->librarian_id);
 
         $institute->save();
 

@@ -50,13 +50,13 @@ class MainController extends Controller
         elseif(Auth::user()->role == "Bibliothécaire")
         {
             $currentDate = date('Y-m-d');
-            $nbr_currents_loans = Loan::where('status', 'En cour')->get()->count();
-            $nbr_currents_reservations = Reservation::where('status', 'En cour')->get()->count();
-            $nbr_lates_loans = Loan::where('status', 'Retard')->get()->count();
+            $nbr_currents_loans = Loan::loan()->where('status', 'En cour')->get()->count();
+            $nbr_currents_reservations = Reservation::reservation()->where('status', 'En cour')->get()->count();
+            $nbr_lates_loans = Loan::loan()->where('status', 'Retard')->get()->count();
         }
         else
         {
-            $nbr_reader_loans = Loan::where('status', 'En cour')
+            $nbr_reader_loans = Loan::loan()->where('status', 'En cour')
                             ->where('reader_id', Auth::user()->id)
                             ->orWhereHas('group', function($query){
                                 $query->whereHas('readers', function($subQuery){
@@ -65,11 +65,11 @@ class MainController extends Controller
                             })->get()->count();
 
 
-            $nbr_reader_reservations = Reservation::where('status', 'En cour')
+            $nbr_reader_reservations = Reservation::reservation()->where('status', 'En cour')
                 ->where('reader_id', Auth::user()->id)->get()->count();
 
 
-            $nbr_current_lates = Loan::where('status', 'Retard')
+            $nbr_current_lates = Loan::loan()->where('status', 'Retard')
                 ->where(function($query) {
                     $query->where('reader_id', Auth::user()->id)->orWhereHas('group', function($subQuery){
                             $subQuery->orWhereHas('readers', function($subSubQuery){
@@ -77,7 +77,6 @@ class MainController extends Controller
                             });
                         });
                 })->get()->count();
-            // dd($nbr_current_lates);
         }
 
         return view('dashboard', [

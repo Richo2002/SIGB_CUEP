@@ -24,6 +24,7 @@ class ReservationController extends Controller
      */
     public function index()
     {
+        $this->manageDelays();
         return view('reservations');
     }
 
@@ -101,7 +102,5 @@ class ReservationController extends Controller
         foreach ($reservations as $reservation) {
             $reservation->update(['status' => "Expiré"]);
         }
-
-        dd($reservations);
     }
 }

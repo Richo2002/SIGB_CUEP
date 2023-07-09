@@ -62,8 +62,6 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/profiles/{profile}', [MainController::class, 'updateProfile']);
 
     Route::get('/test', [ReservationController::class, 'manageDelays']);
-
-    Route::post('resources/{id}/download', [ResourceController::class, 'download']);
 });
 
 

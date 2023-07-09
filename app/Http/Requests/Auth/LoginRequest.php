@@ -46,8 +46,25 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $user = User::where('email', $this->input('email'))->first();
 
-        if (! Auth::attempt($this->only('email', 'password') + ['status' => true], $this->boolean('remember'))) {
+        if($user)
+        {
+            if (!$user->status) {
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.account_disabled'),
+                ]);
+            }
+
+            if ($user->role == "Bibliothécaire" && !$user->institute) {
+                throw ValidationException::withMessages([
+                    'email' => trans('auth.account_no_lie'),
+                ]);
+            }
+        }
+
+
+        if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([

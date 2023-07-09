@@ -58,7 +58,7 @@
                     <tbody>
                         @foreach ($categories as $index => $category)
                             <tr>
-                                <td>{{ count($categories) - $index }}</td>
+                                <td>{{ $category->id }}</td>
                                 <td>{{ $category->classification_number }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td>{{ count($category->sub_categories) }}</td>
