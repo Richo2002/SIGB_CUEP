@@ -18,13 +18,12 @@
                     <div class="card" style="min-height: 200px">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="/storage/coverPages/{{ $resource->cover_page }}" class="img-fluid rounded-start" alt="" style="height: 210px">
+                                <img src="/storage/coverPages/{{ $resource->cover_page }}" class="img-fluid rounded-start" alt="" style="height: 200px">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ $resource->authors }}</h5>
-                                    <p class="card-text">{{ Str::words($resource->title, 10, ' ...') }}</p>
-                                    <p class="card-text"><small class="text-muted">Ajouté le {{ date('d-m-Y', strtotime($resource->created_at)) }}</small></p>
+                                    <h6 class="card-title">{{ $resource->authors }}</h6>
+                                    <p class="card-text">{{ Str::words($resource->title, 12, ' ...') }}</p>
                                     <a href="/resources/{{ $resource->id }}" class="btn see-more-btn">Voir plus</a>
                                 </div>
                             </div>

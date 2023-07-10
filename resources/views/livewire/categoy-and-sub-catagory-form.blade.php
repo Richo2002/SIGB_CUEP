@@ -9,7 +9,7 @@
                             <option value="">Choisir son domaine</option>
                         @endif
                         @foreach ($categories as $category)
-                            <option {{ (isset($resource) && ($resource->sub_category->category->id == $category->id)) ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option @isset($resource) @if($resource->sub_category->category_id == 2) selected @endif @endisset value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
