@@ -30,15 +30,6 @@ use App\Http\Controllers\SubCategoryController;
 
 Route::get('/', [MainController::class, 'welcome']);
 
-Route::get('resources/types/{id}', [ResourceController::class, 'indexTypes']);
-Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
-
-Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resources.show');
-
-Route::get('/resource-details', function () {
-    return view('resource-details');
-});
-
 Route::get('/create-admin-account', [MainController::class, 'createAdminAccount']);
 
 Route::middleware(['auth'])->group(function () {
@@ -47,7 +38,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('librarians', LibrarianController::class)->except(['show', 'destroy']);
     Route::resource('institutes', InstituteController::class)->except(['show', 'destroy']);
-    Route::resource('resources', ResourceController::class)->except(['destroy', 'show']);
+    Route::resource('resources', ResourceController::class)->except(['destroy']);
     Route::resource('types', TypeController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('categories', CategoryController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('sub-categories', SubCategoryController::class)->except(['show', 'destroy']);
@@ -64,5 +55,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/test', [ReservationController::class, 'manageDelays']);
 });
 
+Route::get('resources/types/{id}', [ResourceController::class, 'indexTypes']);
+Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
+
+Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resources.show');
 
 require __DIR__.'/auth.php';
