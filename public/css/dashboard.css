@@ -17,3 +17,13 @@
 {
     color: rgba(0, 133, 89) !important;
 }
+
+#statNine
+{
+    border-left-color: rgba(49, 63, 65, 1) !important;
+}
+
+#statNine > .card-body > .row > .col > div:first-child
+{
+    color: rgba(49, 63, 65, 1) !important;
+}

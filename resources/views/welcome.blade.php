@@ -90,7 +90,7 @@
                         @if (count($types)  > 0)
                             <ul class="list-group">
                                 @foreach ($types as $type)
-                                    <li class="list-group-item"><i class="fa-solid fa-folder me-2"></i> <a href="/resources/types/{{ $type->id }}" class="text-decoration-none">{{ $type->name }}</a></li>
+                                    <li class="list-group-item"><i class="fa-solid fa-folder me-2"></i> <a href="/resources/types/{{ $type->id }}" class="text-decoration-none">{{ $type->name }}</a>{{ " (".count($type->resources).")" }}</li>
                                 @endforeach
                             </ul>
                         @else
@@ -111,14 +111,14 @@
                                     <div class="accordion-item">
                                         <h2 class="accordion-header" id="headingTwo{{ $category->id }}">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo{{ $category->id }}" aria-expanded="false" aria-controls="collapseTwo">
-                                            <i class="fa-solid fa-folder me-2"></i> {{ $category->name }}
+                                            <i class="fa-solid fa-folder me-2"></i> {{ $category->name }} {{ " (".count($category->resources).")" }}
                                         </button>
                                         </h2>
                                         <div id="collapseTwo{{ $category->id }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ $category->id }}" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <ul class="list-group">
                                                 @foreach ($category->sub_categories as $sub_category)
-                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}" class="text-decoration-none">{{ $sub_category->name }}</a></li>
+                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}" class="text-decoration-none">{{ $sub_category->name }}</a>{{ " (".count($sub_category->resources).")" }}</li>
                                                 @endforeach
                                             </ul>
                                         </div>

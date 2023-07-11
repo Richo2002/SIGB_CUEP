@@ -6,11 +6,13 @@ use App\Models\Loan;
 use App\Models\Type;
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Resource;
 use App\Models\Institute;
-use App\Models\Reservation;
 
+use App\Models\Reservation;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\ProfileRequest;
@@ -45,6 +47,7 @@ class MainController extends Controller
         if(Auth::user()->role == "Administrateur")
         {
             $nbr_institutes = Institute::all()->count();
+            $nbr_resources = Resource::all()->count();
             $nbr_librarians = User::where('role', 'Bibliothécaire')->get()->count();
         }
         elseif(Auth::user()->role == "Bibliothécaire")
@@ -81,6 +84,7 @@ class MainController extends Controller
 
         return view('dashboard', [
             'nbr_institutes' => $nbr_institutes ?? null,
+            'nbr_resources' => $nbr_resources ?? null,
             'nbr_librarians' => $nbr_librarians ?? null,
             'nbr_currents_loans' => $nbr_currents_loans ?? null,
             'nbr_currents_reservations' => $nbr_currents_reservations ?? null,

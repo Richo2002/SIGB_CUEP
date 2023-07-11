@@ -39,6 +39,7 @@
                             <th>Uid</th>
                             <th>Cote</th>
                             <th>Nom</th>
+                            <th>Ressource</th>
                             <th>Sous Domaine</th>
                             <th>Action</th>
                         </tr>
@@ -49,7 +50,7 @@
                                 <th>Uid</th>
                                 <th>Cote</th>
                                 <th>Nom</th>
-
+                                <th>Ressource</th>
                                 <th>Sous Domaine</th>
                                 <th>Action</th>
                             </tr>
@@ -61,6 +62,7 @@
                                 <td>{{ $category->id }}</td>
                                 <td>{{ $category->classification_number }}</td>
                                 <td>{{ $category->name }}</td>
+                                <td>{{ count($category->resources) }}</td>
                                 <td>{{ count($category->sub_categories) }}</td>
                                 <td class="d-flex">
                                     <a href="{{ '/categories/'.$category->id.'/edit' }}" class="px-2 py-1" id="pen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer"><i class="fa fa-pen"></i></a>

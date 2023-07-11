@@ -17,10 +17,18 @@ class Category extends Model implements Auditable
     ];
 
     /**
-     * Get the sub category for the Category.
+     * Get the sub category for the category.
      */
     public function sub_categories()
     {
         return $this->hasMany(SubCategory::class)->orderBy('name', 'asc');
+    }
+
+    /**
+     * Get the resources for the Category through sub category.
+     */
+    public function resources()
+    {
+        return $this->hasManyThrough(Resource::class, SubCategory::class);
     }
 }
