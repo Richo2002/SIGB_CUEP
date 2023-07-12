@@ -13,11 +13,12 @@
 
 .catalog-title, .catalog-title:hover,  .contact-title, .contact-title:hover
 {
-    background-color: rgba(0, 133, 89);
+    background-color: rgba(34, 88, 166);
     color: white;
     border-radius: 0% !important;
     cursor:default;
 }
+
 
 #contact p > a
 {

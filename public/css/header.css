@@ -11,18 +11,18 @@
 
 .btn-connect, .btn-connect:hover, .btn-contact, .btn-contact:hover, .see-more-btn, .see-more-btn:hover
 {
-    background-color: rgba(34, 88, 166);
+    background-color: rgba(0, 133, 89);
     color: white;
 }
 
 .nav-item .nav-link
 {
-    color: rgba(49, 63, 65, 0.7);
+    color: rgba(34, 88, 166);
 
 }
 
 .nav-item > .active
 {
-    border-bottom: 2px solid rgba(34, 88, 166);
-    color: rgba(49, 63, 65, 1) !important;
+    border-bottom: 2px solid #f0a945;
+    color: rgba(34, 88, 166) !important;
 }
