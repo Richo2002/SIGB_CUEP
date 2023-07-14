@@ -15,14 +15,11 @@ class Resource extends Component
 {
     use WithPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $selections = [];
     public $hasNoActiveReservation = true;
     public $resourcesLength;
     public $currentInstitute;
-
-
-    protected $resources;
 
     public $size = 0;
     public $extension = "";
@@ -43,23 +40,16 @@ class Resource extends Component
         {
             $this->currentInstitute = $user->institute->id;
         }
+
+        $this->resourcesLength = ModelsResource::count();
     }
 
-    public function updatedSearchInput()
+    public function updating($name, $value)
     {
-        $this->resources = ModelsResource::resource()->where('identification_number', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('registration_number', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('title', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('authors', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('keywords', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('ray', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('edition', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhereHas('type', function($query) {
-                                        $query->where('name', 'LIKE', '%'.$this->searchInput.'%');
-                                    })->orWhereHas('sub_category', function($query) {
-                                        $query->where('name', 'LIKE', '%'.$this->searchInput.'%');
-                                    })
-                                    ->orderByDesc('id')->paginate(10);
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
     }
 
     public function paginationView()
@@ -117,15 +107,25 @@ class Resource extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->resources = ModelsResource::resource()->orderByDesc('id')->paginate(10);
-            $this->resourcesLength = $this->resources->total();
-        }
-
+        $resources = ModelsResource::resource()->where(function($query) {
+            $query->where('identification_number', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('registration_number', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('title', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('authors', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('keywords', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('ray', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('edition', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere(function ($query) {
+                $query->orWhereHas('type', function($subQuery) {
+                    $subQuery->where('name', 'LIKE', '%'.$this->searchInput.'%');
+                })->orWhereHas('sub_category', function($subQuery) {
+                    $subQuery->where('name', 'LIKE', '%'.$this->searchInput.'%');
+                });
+            });
+        })->orderByDesc('id')->paginate(10);
 
         return view('livewire.resource', [
-            'resources' => $this->resources
+            'resources' => $resources
         ]);
     }
 }

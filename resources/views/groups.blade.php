@@ -72,7 +72,11 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les groupes enregistrés. Le tableau présente les détails des groupes, avec une options d'action pour les modifier.</p>
+                    @if (Auth::user()->role=="Bibliothécaire")
+                        <p class="mb-4">Le tableau présente les détails des groupes, avec des options d'action pour les modifier, les supprimer ou visualiser les membres.</p>
+                    @else
+                        <p class="mb-4">Gérez les groupes enregistrés. Le tableau présente les détails des groupes, avec une option d'action pour visualiser les membres.</p>
+                    @endif
 
                     @livewire('group');
                 <!-- /.container-fluid -->

@@ -15,13 +15,25 @@ class Category extends Component
     public $classification_number;
     public $categoriesLength;
 
-    public $searchInput;
-    protected $categories;
+    public $searchInput = '';
 
     protected $rules = [
         'name' => 'string|max:150|unique:categories',
         'classification_number' => 'required_with:name|regex:/^[0-9]+$/|unique:categories',
     ];
+
+    public function mount()
+    {
+        $this->categoriesLength = Domain::count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
 
     public function store()
@@ -62,21 +74,12 @@ class Category extends Component
         return 'livewire.pagination';
     }
 
-    public function updatedSearchInput()
-    {
-        $this->categories = Domain::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
-    }
-
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->categories = Domain::orderByDesc('id')->paginate(10);
-            $this->categoriesLength = $this->categories->total();
-        }
+        $categories = Domain::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
 
         return view('livewire.category', [
-            'categories' => $this->categories
+            'categories' => $categories
         ]);
     }
 }

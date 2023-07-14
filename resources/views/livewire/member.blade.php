@@ -41,11 +41,10 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Nom Complet</th>
                             <th>Téléphone</th>
                             <th>Role</th>
-                            <th>Status</th>
+                            <th>Statut</th>
                             @if (Auth::user()->role === "Bibliothécaire")
                                 <th>Action</th>
                             @endif
@@ -53,11 +52,10 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th>Uid</th>
                             <th>Nom Complet</th>
                             <th>Téléphone</th>
                             <th>Role</th>
-                            <th>Status</th>
+                            <th>Statut</th>
                             @if (Auth::user()->role === "Bibliothécaire")
                                 <th>Action</th>
                             @endif
@@ -65,11 +63,10 @@
                     </tfoot>
                     <tbody>
                         <tr>
-                            <td>{{ $group->responsable->id }}</td>
                             <td>{{ $group->responsable->lastname." ".$group->responsable->firstname }}</td>
                             <td>{{ $group->responsable->phone_number }}</td>
                             <td>{{ "Responsable" }}</td>
-                            <td><i class="fa fa-circle {{ $group->responsable->status ? 'actif' : 'inactif' }}"></i></td>
+                            <td><i class="fa fa-circle {{ $group->responsable->status ? 'actif' : 'inactif' }}"></i> {{ $group->responsable->status ? 'Actif' : 'Inactif' }}</td>
                             @if (Auth::user()->role === "Bibliothécaire")
                                 <td>
                                     <a href="#" class="px-2 py-1 disabled" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="" ><i class="fa fa-trash"></i></a>
@@ -78,11 +75,10 @@
                         </tr>
                         @foreach ($members as $index => $member)
                             <tr>
-                                <td>{{ $member->id }}</td>
                                 <td>{{ $member->lastname." ".$member->firstname }}</td>
                                 <td>{{ $member->phone_number }}</td>
                                 <td>{{ "Membre" }}</td>
-                                <td><i class="fa fa-circle {{ $member->status ? 'actif' : 'inactif' }}"></i></td>
+                                <td><i class="fa fa-circle {{ $member->status ? 'actif' : 'inactif' }}"></i> {{ $member->status ? 'Actif' : 'Inactif' }}</td>
                                 @if (Auth::user()->role === "Bibliothécaire")
                                     <td>
                                         <a href="#" x-on:click.prevent="currentMemberId = {{ $member->id }};" class="px-2 py-1" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="Retirer du groupe" ><i class="fa fa-trash"></i></a>

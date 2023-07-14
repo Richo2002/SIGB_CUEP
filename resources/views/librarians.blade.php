@@ -66,7 +66,7 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les bibliothécaires enregistrés. Le tableau présente les détails des bibliothécaires, avec des options d'action pour les modifier.</p>
+                    <p class="mb-4">Le tableau présente les détails des bibliothécaires, avec une option d'action pour les modifier.</p>
 
                     <a href="/librarians/create" class="btn mb-4 me-auto" id="submit-btn">Ajouter</a>
 

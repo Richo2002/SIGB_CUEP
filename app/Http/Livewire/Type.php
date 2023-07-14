@@ -12,14 +12,25 @@ class Type extends Component
     use WithPagination;
 
     public $name;
-    public $searchInput;
+    public $searchInput = '';
     public $typesLength;
-
-    protected $types;
 
     protected $rules = [
         'name' => 'string|max:50|unique:types',
     ];
+
+    public function mount()
+    {
+        $this->typesLength = Genre::count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
     public function store()
     {
@@ -34,11 +45,6 @@ class Type extends Component
             session()->flash('message', 'Enrégistrement réussi');
             $this->resetPage();
         }
-    }
-
-    public function updatedSearchInput()
-    {
-        $this->types = Genre::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
     }
 
     public function paginationView()
@@ -59,14 +65,10 @@ class Type extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->types = Genre::orderByDesc('id')->paginate(10);
-            $this->typesLength = $this->types->total();
-        }
+        $types = Genre::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
 
         return view('livewire.type', [
-            'types' => $this->types
+            'types' => $types
         ]);
     }
 }

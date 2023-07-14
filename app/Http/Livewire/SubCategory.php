@@ -10,21 +10,27 @@ class SubCategory extends Component
 {
     use WithPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $subCategoriesLength;
 
+    public function mount()
+    {
+        $this->subCategoriesLength = SubDomain::count();
 
-    protected $sub_categories;
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
 
     public function paginationView()
     {
         return 'livewire.pagination';
-    }
-
-    public function updatedSearchInput()
-    {
-        $this->sub_categories = SubDomain::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
     }
 
     public function delete(int $currentSubDomainId)
@@ -40,14 +46,10 @@ class SubCategory extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->sub_categories = SubDomain::orderByDesc('id')->paginate(10);
-            $this->subCategoriesLength = $this->sub_categories->total();
-        }
+        $sub_categories = SubDomain::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
 
         return view('livewire.sub-category', [
-            'sub_categories' => $this->sub_categories
+            'sub_categories' => $sub_categories
         ]);
     }
 }

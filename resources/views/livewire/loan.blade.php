@@ -22,12 +22,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Lecteur/Groupe</th>
                             <th>Nombre</th>
                             <th>Date de début</th>
                             <th>Date de fin</th>
-                            <th>Status</th>
+                            <th>Statut</th>
                             @if (Auth::user()->role=="Bibliothécaire")
                                 <th>Action</th>
                             @endif
@@ -36,12 +35,11 @@
                     <tfoot>
                         @if (count($loans) > 0)
                             <tr>
-                                <th>Uid</th>
                                 <th>Lecteur/Groupe</th>
                                 <th>Nombre</th>
                                 <th>Date de début</th>
                                 <th>Date de fin</th>
-                                <th>Status</th>
+                                <th>Statut</th>
                                 @if (Auth::user()->role=="Bibliothécaire")
                                     <th>Action</th>
                                 @endif
@@ -51,13 +49,12 @@
                     <tbody>
                         @foreach ($loans as $index => $loan)
                             <tr>
-                                <td>{{ $loan->id }}</td>
                                 <td>{{ $loan->reader ? $loan->reader->lastname." ".$loan->reader->firstname : $loan->group->name}}</td>
                                 <td>
                                     {{ count($loan->resources) }}<a href="" wire:click.prevent="getLoanedResources({{ $loan->id }})" class="px-2 py-1" id="eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Voir les resources" data-toggle="modal" data-target="#staticBackdrop2"><i class="fa fa-eye"></i></a>
                                 </td>
                                 <td>{{ $loan->start_date }}</td>
-                                <td>{{ $loan->end_date }}</td>
+                                <td>{{ date('d-m-Y', strtotime($loan->end_date)) }}</td>
                                 @if ($loan->status == "Retard" )
                                     <td><i class="fa fa-circle inactif"></i></td>
                                 @else

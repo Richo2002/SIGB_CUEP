@@ -69,7 +69,7 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les lecteurs enregistrés. Le tableau présente les détails des lecteurs, avec des options d'action pour les désactiver ou les modifier.</p>
+                    <p class="mb-4">Le tableau présente les détails des lecteurs, avec des options d'action pour les modifier, les désactiver ou éditer leur carte.</p>
 
                     <a href="/readers/create" class="btn mb-4 me-auto" id="submit-btn">Ajouter</a>
 

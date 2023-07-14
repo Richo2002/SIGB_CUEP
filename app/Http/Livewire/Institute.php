@@ -10,19 +10,20 @@ class Institute extends Component
 {
     use withPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $institutesLength;
 
-    protected $institutes;
-
-    public function updatedSearchInput()
+    public function mount()
     {
-        $this->institutes = Institute::where('name', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('address', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhereHas('librarian', function($query) {
-                                        $query->where('firstname', 'LIKE', '%'.$this->searchInput.'%')
-                                        ->orWhere('lastname', 'LIKE', '%'.$this->searchInput.'%');
-                                        })->orderByDesc('id')->paginate(10);
+        $this->institutesLength = ModelsInstitute::count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
     }
 
     public function delete(int $currentInstituteId)
@@ -43,14 +44,15 @@ class Institute extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->institutes = ModelsInstitute::orderByDesc('id')->paginate(10);
-            $this->institutesLength = $this->institutes->total();
+        $institutes = ModelsInstitute::where('name', 'LIKE', '%'.$this->searchInput.'%')
+                                    ->orWhere('address', 'LIKE', '%'.$this->searchInput.'%')
+                                    ->orWhereHas('librarian', function($query) {
+                                        $query->where('firstname', 'LIKE', '%'.$this->searchInput.'%')
+                                        ->orWhere('lastname', 'LIKE', '%'.$this->searchInput.'%');
+                                        })->orderByDesc('id')->paginate(10);
 
-        }
         return view('livewire.institute', [
-            'institutes' => $this->institutes
+            'institutes' => $institutes
         ]);
     }
 }

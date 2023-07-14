@@ -10,27 +10,27 @@ class Reservation extends Component
 {
     use WithPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $resources = [];
     public $reservationsLength;
 
+    public function mount()
+    {
+        $this->reservationsLength = ModelsReservation::reservation()->count();
+    }
 
-    protected $reservations;
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
+
 
     public function paginationView()
     {
         return 'livewire.pagination';
-    }
-
-    public function updatedSearchInput()
-    {
-        $this->reservations = ModelsReservation::reservation()->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
-                            ->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
-                            ->orWhereHas('reader', function($query) {
-                                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
-                            })->orderByDesc('id')
-                            ->paginate(10);
     }
 
     public function getReservedResources($currentReservationId)
@@ -51,15 +51,17 @@ class Reservation extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->reservations = ModelsReservation::reservation()->orderByDesc('id')->paginate(10);
-            $this->reservationsLength = $this->reservations->total();
-
-        }
+        $reservations = ModelsReservation::reservation()->where(function($query) {
+            $query->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('end_date', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhereHas('reader', function($query) {
+                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
+            });
+        })->orderByDesc('id')->paginate(10);
 
         return view('livewire.reservation', [
-            'reservations' => $this->reservations
+            'reservations' => $reservations
         ]);
     }
 }

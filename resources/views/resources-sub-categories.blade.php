@@ -70,7 +70,7 @@
                             </ol>
                           </nav>
                     </div>
-                    <p class="mb-4">Gérez les sous domaines enregistrés. Le tableau présente les détails des domaines, avec une options d'action pour les modifier.</p>
+                    <p class="mb-4">Le tableau présente les détails des domaines, avec des options d'action pour les modifier ou les supprimer.</p>
 
                     <a href="/sub-categories/create" class="btn mb-4" id="submit-btn">Ajouter</a>
 

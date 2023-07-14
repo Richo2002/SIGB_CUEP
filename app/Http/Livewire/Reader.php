@@ -14,22 +14,23 @@ class Reader extends Component
 
     use WithPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $readersLength;
 
-
-    protected $readers;
-
-    public function updatedSearchInput()
+    public function mount()
     {
-        $this->readers = User::user()->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('npi', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('phone_number', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('email', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->where('role', '<>' ,'Bibliothécaire')
-                                    ->where('role', '<>' ,'Administrateur')
-                                    ->orderByDesc('id')->paginate(10);
+        $this->readersLength = User::user()->orderByDesc('id')
+        ->where('role', '<>' ,'Bibliothécaire')
+        ->where('role', '<>' ,'Administrateur')->count();
+    }
+
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
     }
 
     public function paginationView()
@@ -78,19 +79,18 @@ class Reader extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->readers = User::user()->orderByDesc('id')
-                        ->where('role', '<>' ,'Bibliothécaire')
-                        ->where('role', '<>' ,'Administrateur')
-                        ->paginate(10);
-
-            $this->readersLength = $this->readers->total();
-
-        }
+        $readers = User::user()->where(function($query) {
+            $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('npi', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('phone_number', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('email', 'LIKE', '%'.$this->searchInput.'%');
+        })->where('role', '<>' ,'Bibliothécaire')
+        ->where('role', '<>' ,'Administrateur')
+        ->orderByDesc('id')->paginate(10);
 
         return view('livewire.reader', [
-            'readers' => $this->readers
+            'readers' => $readers
         ]);
     }
 }

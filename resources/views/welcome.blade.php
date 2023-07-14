@@ -36,7 +36,7 @@
                   </li>
                  @if (Auth::user())
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-connect" href="/dashboard">Dashboard</a>
+                        <a class="btn btn-connect" href="/dashboard">Tableau de bord</a>
                     </li>
                  @else
                     <li class="nav-item ms-lg-2">
@@ -102,7 +102,7 @@
             <div class="col-lg-6 col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="card-title">Categories</h5>
+                        <h5 class="card-title">Catégories</h5>
                     </div>
                     <div class="card-body">
                         @if (count($categories)  > 0)

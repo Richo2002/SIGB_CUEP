@@ -22,7 +22,6 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Cote</th>
                             <th>Nom</th>
                             <th>Ressource</th>
@@ -33,7 +32,6 @@
                     @if ($sub_categories->count() > 0)
                         <tfoot>
                             <tr>
-                                <th>Uid</th>
                                 <th>Cote</th>
                                 <th>Nom</th>
                                 <th>Ressource</th>
@@ -45,7 +43,6 @@
                     <tbody>
                         @foreach ($sub_categories as $index => $sub_category)
                             <tr>
-                                <td>{{ $sub_category->id }}</td>
                                 <td>{{ $sub_category->classification_number }}</td>
                                 <td>{{ $sub_category->name }}</td>
                                 <td>{{ count($sub_category->resources) }}</td>

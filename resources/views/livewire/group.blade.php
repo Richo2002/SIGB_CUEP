@@ -45,17 +45,15 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Nom</th>
                             <th>Membre</th>
                             <th>Responsable</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    @if ($groups->count() > 0)
+                    @if (count($groups) > 0)
                         <tfoot>
                             <tr>
-                                <th>Uid</th>
                                 <th>Nom</th>
                                 <th>Membre</th>
                                 <th>Responsable</th>
@@ -66,7 +64,6 @@
                     <tbody>
                         @foreach ($groups as $index => $group)
                             <tr>
-                                <td>{{ $group->id }}</td>
                                 <td>{{ $group->name }}</td>
                                 <td>{{ count($group->readers) + 1 }}</td>
                                 <td>{{ $group->responsable->lastname." ".$group->responsable->firstname }}</td>
@@ -76,7 +73,7 @@
                                     @endif
                                     <a href="{{ route('groups.members.index', $group->id) }}" class="px-2 py-1" id="member" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Membre du groupe"><i class="fa fa-people-group"></i></a>
                                     @if (Auth::user()->role === "Bibliothécaire")
-                                        <a href="#" x-on:click.prevent="currentGroupId = {{ $group->id }};" class="px-2 py-1" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="{{ (count($group->loans) > 0 && count($group->readers) > 0 ) ? '' : 'Supprimer' }}" ><i class="fa fa-trash"></i></a>
+                                        <a href="#" x-on:click.prevent="currentGroupId = {{ $group->id }};" class="px-2 py-1 {{ (count($group->loans) > 0 && count($group->readers) > 0 ) ? 'disabled' : '' }}" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="Supprimer"><i class="fa fa-trash"></i></a>
                                     @endif
                                 </td>
                             </tr>

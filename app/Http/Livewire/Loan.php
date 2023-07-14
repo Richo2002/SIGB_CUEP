@@ -10,26 +10,27 @@ class Loan extends Component
 {
     use withPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $loansLength;
 
-
-    protected $loans;
     public $resources = [];
+
+    public function mount()
+    {
+        $this->loansLength = ModelsLoan::count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
     public function paginationView()
     {
         return 'livewire.pagination';
-    }
-
-    public function updatedSearchInput()
-    {
-        $this->loans = ModelsLoan::loan()->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
-                            ->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
-                            ->orWhereHas('reader', function($query) {
-                                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
-                            })->paginate(10);
     }
 
     public function getLoanedResources($currentLoanId)
@@ -56,14 +57,17 @@ class Loan extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->loans = ModelsLoan::loan()->paginate(10);
-            $this->loansLength = $this->loans->total();
-        }
+        $loans = ModelsLoan::loan()->where(function($query) {
+            $query->where('start_date', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('end_date', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhereHas('reader', function($query) {
+                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
+            });
+        })->orderByDesc('id')->paginate(10);
 
         return view('livewire.loan', [
-            'loans' => $this->loans
+            'loans' => $loans
         ]);
     }
 

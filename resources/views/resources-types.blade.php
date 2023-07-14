@@ -72,7 +72,7 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les types enregistrés. Le tableau présente les détails des types, avec une options d'action pour les modifier.</p>
+                    <p class="mb-4">Le tableau présente les détails des types de ressources, avec des options d'action pour les modifier ou les supprimer.</p>
 
                     @livewire('type')
                 <!-- /.container-fluid -->

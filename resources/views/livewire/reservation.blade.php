@@ -16,12 +16,11 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Lecteur/Groupe</th>
                             <th>Nombre</th>
                             <th>Date de début</th>
                             <th>Date de fin</th>
-                            <th>Status</th>
+                            <th>Statut</th>
                             @if (Auth::user()->role=="Bibliothécaire")
                                 <th>Action</th>
                             @endif
@@ -30,12 +29,11 @@
                     @if (count($reservations) > 0)
                         <tfoot>
                             <tr>
-                                <th>Uid</th>
                                 <th>Lecteur/Groupe</th>
                                 <th>Nombre</th>
                                 <th>Date de début</th>
                                 <th>Date de fin</th>
-                                <th>Status</th>
+                                <th>Statut</th>
                                 @if (Auth::user()->role=="Bibliothécaire")
                                     <th>Action</th>
                                 @endif
@@ -45,13 +43,12 @@
                     <tbody>
                         @foreach ($reservations as $index => $reservation)
                             <tr>
-                                <td>{{ $reservation->id }}</td>
                                 <td>{{ $reservation->reader->lastname." ".$reservation->reader->firstname }}</td>
                                 <td>
                                     {{ count($reservation->resources) }}<a href="" wire:click.prevent="getReservedResources({{ $reservation->id }})" class="px-2 py-1" id="eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Voir les resources" data-toggle="modal" data-target="#staticBackdrop2"><i class="fa fa-eye"></i></a>
                                 </td>
                                 <td>{{ $reservation->start_date }}</td>
-                                <td>{{ $reservation->end_date }}</td>
+                                <td>{{ date('d-m-Y', strtotime($reservation->end_date)) }}</td>
                                 @if ($reservation->status == "En cour" )
                                     <td><i class="fa fa-circle actif"></i></td>
                                 @else
@@ -59,7 +56,7 @@
                                 @endif
                                 @if (Auth::user()->role=="Bibliothécaire")
                                     <td class="d-flex">
-                                        <a href="" x-on:click.prevent="$wire.lend({{ $reservation->id }})" class="px-2 py-1{{ $reservation->status == "Terminé" ? ' disabled' : '' }}" id="return" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Prétés les resources"><i class="fa fa-shopping-cart"></i></a>
+                                        <a href="" x-on:click.prevent="$wire.lend({{ $reservation->id }})" class="px-2 py-1{{ $reservation->status != "En cour" ? ' disabled' : '' }}" id="return" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Prétés les resources"><i class="fa fa-shopping-cart"></i></a>
                                     </td>
                                 @endif
                             </tr>

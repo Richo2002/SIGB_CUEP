@@ -71,8 +71,13 @@
                           </nav>
                     </div>
 
+                    @if (Auth::user()->role=="Bibliothécaire")
+                        <p class="mb-4">Le tableau présente les détails des ressources, avec une option d'action pour prêter a un lecteur les réservations faites.</p>
+                    @else
+                        <p class="mb-4">Le tableau présente les détails des réservations faites.</p>
+                    @endif
 
-                    <p class="mb-4">Le tableau présente les détails des réservations faites.</p>
+
 
                     @livewire('reservation')
                 <!-- /.container-fluid -->

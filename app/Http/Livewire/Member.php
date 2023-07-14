@@ -15,9 +15,22 @@ class Member extends Component
     public $reader_id;
     public $membersLength;
 
-    public $searchInput;
-    protected $members;
+    public $searchInput = '';
 
+    public function mount()
+    {
+        $this->membersLength = User::whereHas('groups', function($query) {
+            $query->where('groups.id', $this->group->id);
+        })->count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
     public function store()
     {
@@ -31,17 +44,6 @@ class Member extends Component
             session()->flash('message', 'Enrégistrement réussi');
             $this->resetPage();
         }
-    }
-
-    public function updatedSearchInput()
-    {
-        $this->members = User::where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->where('role', '<>' ,'Bibliothécaire')
-                                    ->where('role', '<>' ,'Administrateur')
-                                    ->whereHas('groups', function($query) {
-                                        $query->where('groups.id', $this->group->id);
-                                        })->orderByDesc('id')->paginate(10);
     }
 
     public function remove(int $currentMemberId, int $currentGroupId)
@@ -74,20 +76,19 @@ class Member extends Component
             ->get();
         }
 
-        if(!$this->searchInput)
-        {
-            $this->members = User::whereHas('groups', function($query) {
+        $members = User::where(function($query) {
+            $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
+        })->where('role', '<>' ,'Bibliothécaire')
+           ->where('role', '<>' ,'Administrateur')
+            ->whereHas('groups', function($query) {
                 $query->where('groups.id', $this->group->id);
-            })->orderByDesc('id')
-            ->paginate(10);
-
-            $this->membersLength = $this->members->total();
-        }
+                })->orderByDesc('id')->paginate(10);
 
 
         return view('livewire.member', [
             'readers' => $readers ?? null,
-            'members' => $this->members,
+            'members' => $members,
         ]);
     }
 }

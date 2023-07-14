@@ -61,7 +61,7 @@
                             </ol>
                           </nav>
                     </div>
-                    <p class="mb-4">Remplissez les informations ci-dessous pour Modifier un nouvel domaine à la liste.</p>
+                    <p class="mb-4">Remplissez les informations ci-dessous pour modifier un nouvel domaine à la liste.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">

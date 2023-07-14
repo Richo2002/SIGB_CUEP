@@ -70,7 +70,12 @@
                         </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les ressources enregistrées. Le tableau présente les détails des ressources, avec des options d'action pour les modifier</p>
+                    @if (Auth::user()->role=="Bibliothécaire")
+                        <p class="mb-4">Le tableau présente les détails des ressources, avec des options d'action pour les modifier, les télécharger ou les activer/désactiver. Pour prêter des ressources a un lecteur, il suffit de cocher les ressources souhaitées et de cliquer sur le bouton <b>Prêter ressources</b> ci-dessous.</p>
+                    @else
+                        <p class="mb-4">Le tableau présente les détails des ressources, avec des options d'action pour les visualiser ou les télécharger. Pour effectuer une réservation, il suffit de cocher les ressources souhaitées et de cliquer sur le bouton <b>Réserver ressources</b> ci-dessous.</p>
+                    @endif
+
 
                     @livewire('resource')
                 <!-- /.container-fluid -->

@@ -60,7 +60,14 @@ class Group extends Model implements Auditable
         }
         else
         {
-            $query->where('institute_id', $user->registrations()->latest()->first()->institute_id);
+            $query->where('institute_id', $user->registrations()->latest()->first()->institute_id)
+            ->where(function($query) use($user) {
+                $query->whereHas('readers', function($subQuery) use ($user){
+                    $subQuery->where('users.id', $user->id);
+                })->orWhereHas('responsable', function($subQuery) use($user){
+                    $subQuery->where('users.id', $user->id);
+                });
+            });
         }
     }
 

@@ -72,7 +72,13 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les membres de groupes. Le tableau présente les membres du groupe {{ $group->name }}.</p>
+                    @if (Auth::user()->role=="Bibliothécaire")
+                        <p class="mb-4">Le tableau présente les membres du groupe {{ $group->name }}, avec une option d'action pour les supprimer.</p>
+                    @else
+                        <p class="mb-4">Le tableau présente les membres du groupe {{ $group->name }}.</p>
+                    @endif
+
+
 
                     @livewire('member', ['group' => $group])
                 <!-- /.container-fluid -->

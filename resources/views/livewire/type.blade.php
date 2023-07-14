@@ -32,7 +32,6 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Nom Complet</th>
                             <th>Ressource</th>
                             <th>Action</th>
@@ -41,7 +40,6 @@
                     @if ($types->count() > 0)
                         <tfoot>
                             <tr>
-                                <th>Uid</th>
                                 <th>Nom Complet</th>
                                 <th>Ressource</th>
                                 <th>Action</th>
@@ -51,9 +49,6 @@
                     <tbody>
                         @foreach ($types as $index => $type)
                             <tr>
-                                <td>
-                                    {{ $type->id }}
-                                </td>
                                 <td>{{ $type->name }}</td>
                                 <td>{{ count($type->resources) }}</td>
                                 <td class="d-flex">

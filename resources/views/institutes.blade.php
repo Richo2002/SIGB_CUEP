@@ -70,7 +70,7 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Gérez les instituts enregistrés. Le tableau présente les détails des instituts, avec des options d'action pour les modifier.</p>
+                    <p class="mb-4">Le tableau présente les détails des instituts, avec des options d'action pour les modifier ou les supprimer.</p>
 
                     <a href="/institutes/create" class="btn mb-4 me-auto" id="submit-btn">Ajouter</a>
 

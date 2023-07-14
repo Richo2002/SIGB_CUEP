@@ -5,11 +5,11 @@
             <a href="/resources/create" class="btn mb-4" id="submit-btn">Ajouter</a>
         @endif
         @if (Auth::user()->role=="Bibliothécaire")
-            <a x-show="selections.length > 0" href="" class="btn mb-4" id="loan-btn" x-on:click.prevent="$wire.lend(selections)">
+            <a x-cloak href="" class="btn mb-4" x-bind:class="{'disabled': selections.length <= 0}" id="loan-btn" x-on:click.prevent="$wire.lend(selections)">
                 Prêter ressources (<span x-text="selections.length"></span>)
             </a>
         @else
-            <a x-show="selections.length > 0" href="" class="btn mb-4" id="loan-btn" x-on:click.prevent="$wire.book(selections)">
+            <a x-cloak href="" class="btn mb-4" x-bind:class="{'disabled': selections.length <= 0}" id="loan-btn" x-on:click.prevent="$wire.book(selections)">
                 Réserver ressources (<span x-text="selections.length"></span>)
             </a>
         @endif
@@ -39,29 +39,43 @@
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Uid</th>
+                            @if (Auth::user()->role=="Bibliothécaire")
+                                <th>Numéro Enregistrement</th>
+                            @endif
                             <th>Photo</th>
                             <th>Titre</th>
                             <th>Sous Domaine</th>
                             <th>Type</th>
                             <th>Auteur</th>
-                            <th>Page</th>
-                            <th>Disponibilité</th>
+                            @if (Auth::user()->role!="Bibliothécaire")
+                                <th>Page</th>
+                            @endif
+                            <th>Disponible</th>
+                            @if (Auth::user()->role=="Bibliothécaire")
+                                <th>Statut</th>
+                            @endif
                             <th>Action</th>
                         </tr>
                     </thead>
-                    @if ($resources->count() > 0)
+                    @if (count($resources) > 0)
                         <tfoot>
                             <tr>
                                 <th></th>
-                                <th>Uid</th>
+                                @if (Auth::user()->role=="Bibliothécaire")
+                                    <th>Numéro Enregistrement</th>
+                                @endif
                                 <th>Photo</th>
                                 <th>Titre</th>
                                 <th>Sous Domaine</th>
                                 <th>Type</th>
                                 <th>Auteur</th>
-                                <th>Page</th>
-                                <th>Disponibilité</th>
+                                @if (Auth::user()->role!="Bibliothécaire")
+                                    <th>Page</th>
+                                @endif
+                                <th>Disponible</th>
+                                @if (Auth::user()->role=="Bibliothécaire")
+                                    <th>Statut</th>
+                                @endif
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -72,7 +86,9 @@
                                 <td>
                                     <input x-model="selections" type="checkbox" value="{{ $resource->id }}" {{ ($resource->available_number > 0 && $resource->status == true && $hasNoActiveReservation == true && $currentInstitute == $resource->institute_id) ? '' : 'disabled' }}>
                                 </td>
-                                <td>{{ $resource->id }}</td>
+                                @if (Auth::user()->role=="Bibliothécaire")
+                                    <td>{{ $resource->registration_number }}</td>
+                                @endif
                                 <td>
                                     <div>
                                         <img src="{{ '/storage/coverPages/'.$resource->cover_page }}" width="50px" height="50px" alt="" style="object-fit: contain">
@@ -82,8 +98,13 @@
                                 <td>{{ $resource->sub_category->name }}</td>
                                 <td>{{ $resource->type->name }}</td>
                                 <td>{{ $resource->authors }}</td>
-                                <td>{{ $resource->page_number }}</td>
-                                <td><i class="fa fa-circle {{ $resource->available_number > 0 ? 'actif' : 'inactif' }}"></i> {{ $resource->status > 0 ? 'actif' : 'inactif' }}</td>
+                                @if (Auth::user()->role!="Bibliothécaire")
+                                    <td>{{ $resource->page_number }}</td>
+                                @endif
+                                <td><i class="fa fa-circle {{ $resource->available_number > 0 ? 'actif' : 'inactif' }}"></i> {{ $resource->available_number > 0 ? 'Oui' : 'Non' }}</td>
+                                @if (Auth::user()->role=="Bibliothécaire")
+                                    <td>{{ $resource->status ? 'Actif' : 'Inactif' }}</td>
+                                @endif
                                 <td class="d-flex">
                                     <a href="{{ '/resources/'.$resource->id.'/edit' }}" class="px-2 py-1" id="pen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer"><i class="fa fa-pen"></i></a>
                                     <a href="" x-on:click.prevent="currentResourceAuthors = '{{ $resource->authors }}'; currentResourceDigitalVersion = '{{ $resource->digital_version }}'" wire:click.prevent="getFileDetails({{ $resource->id }})" class="px-2 py-1 {{ $resource->digital_version ? '' : 'disabled' }}" id="download" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop2" title="Téléchargement"><i class="fa fa-download"></i></a>

@@ -23,7 +23,6 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>Nom Complet</th>
                             <th>Adresse</th>
                             <th>Ressource</th>
@@ -34,7 +33,6 @@
                     <tfoot>
                         @if (count($institutes) > 0)
                             <tr>
-                                <th>Uid</th>
                                 <th>Nom Complet</th>
                                 <th>Adresse</th>
                                 <th>Ressource</th>
@@ -46,7 +44,6 @@
                     <tbody>
                         @foreach ($institutes as $index => $institute)
                             <tr>
-                                <td>{{ $institute->id }}</td>
                                 <td>{{ $institute->name }}</td>
                                 <td>{{ $institute->address }}</td>
                                 <td>{{ count($institute->resources) }}</td>

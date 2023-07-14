@@ -16,14 +16,26 @@ class Group extends Component
     public $responsable_id;
     public $groupsLength;
 
-    public $searchInput;
-    protected $groups;
+    public $searchInput = '';
 
     protected $rules = [
         'name' => 'string|max:100|unique:groups',
         'responsable_id' => 'required_with:name',
     ];
 
+    public function mount()
+    {
+        $this->groupsLength = Team::group()->count();
+    }
+
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
 
     public function store()
     {
@@ -54,16 +66,6 @@ class Group extends Component
         return 'livewire.pagination';
     }
 
-    public function updatedSearchInput()
-    {
-        $this->groups = Team::group()->where('name', 'LIKE', '%'.$this->searchInput.'%')
-                            ->orWhereHas('responsable', function($query) {
-                                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
-                                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
-                            })->orderByDesc('id')
-                            ->paginate(10);
-    }
-
     public function delete(int $currentGroupId)
     {
         $group = Team::findOrFail($currentGroupId);
@@ -88,17 +90,16 @@ class Group extends Component
             ->get();
         }
 
-        if(!$this->searchInput)
-        {
-            $this->groups = Team::group()->orderByDesc('id')->paginate(10);
-            $this->groupsLength = $this->groups->total();
-
-        }
-
+        $groups = Team::group()->where('name', 'LIKE', '%'.$this->searchInput.'%')
+                            ->whereHas('responsable', function($query) {
+                                $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
+                                ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%');
+                            })->orderByDesc('id')
+                            ->paginate(10);
 
         return view('livewire.group', [
             'readers' => $readers ?? null,
-            'groups' => $this->groups
+            'groups' => $groups
         ]);
     }
 }

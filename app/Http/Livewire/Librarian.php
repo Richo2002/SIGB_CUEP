@@ -10,23 +10,20 @@ class Librarian extends Component
 {
     use WithPagination;
 
-    public $searchInput;
+    public $searchInput = '';
     public $librariansLength;
 
-
-    protected $librarians;
-
-    public function updatedSearchInput()
+    public function mount()
     {
-        $this->librarians = User::where('role', '=' ,'Bibliothécaire')
-            ->where('email', 'like', '%'. $this->searchInput. '%')
-            ->orWhere('phone_number', 'like', '%'.$this->searchInput.'%')
-            ->orWhere('lastname', 'like', '%'.$this->searchInput.'%')
-            ->orWhere('firstname', 'like', '%'.$this->searchInput.'%')
-            ->orWhereHas('institute', function($subQuery) {
-                $subQuery->where('name', 'like', '%'.$this->searchInput.'%')
-                ->orWhere('address', 'like', '%'.$this->searchInput.'%');
-                })->orderByDesc('id')->paginate(10);
+        $this->librariansLength = User::where('role', '=' ,'Bibliothécaire')->count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
     }
 
     public function paginationView()
@@ -36,18 +33,18 @@ class Librarian extends Component
 
     public function render()
     {
-        if(!$this->searchInput)
-        {
-            $this->librarians = User::orderByDesc('id')
-                        ->where('role', '=' ,'Bibliothécaire')
-                        ->paginate(10);
-
-            $this->librariansLength = $this->librarians->total();
-
-        }
+        $librarians = User::where('role', '=' ,'Bibliothécaire')
+            ->where('email', 'like', '%'. $this->searchInput. '%')
+            ->orWhere('phone_number', 'like', '%'.$this->searchInput.'%')
+            ->orWhere('lastname', 'like', '%'.$this->searchInput.'%')
+            ->orWhere('firstname', 'like', '%'.$this->searchInput.'%')
+            ->orWhereHas('institute', function($subQuery) {
+                $subQuery->where('name', 'like', '%'.$this->searchInput.'%')
+                ->orWhere('address', 'like', '%'.$this->searchInput.'%');
+                })->orderByDesc('id')->paginate(10);
 
         return view('livewire.librarian', [
-            'librarians' => $this->librarians
+            'librarians' => $librarians
         ]);
     }
 }

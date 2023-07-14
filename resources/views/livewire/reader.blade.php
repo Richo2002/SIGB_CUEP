@@ -21,26 +21,24 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>Uid</th>
                             <th>NPI</th>
                             <th>Nom Complet</th>
                             <th>Téléphone</th>
-                            <th>Role</th>
+                            <th>Catégorie</th>
                             <th>Expire le</th>
-                            <th>Status</th>
+                            <th>Statut</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     @if ($readers->count() > 0)
                         <tfoot>
                             <tr>
-                                <th>Uid</th>
                                 <th>NPI</th>
                                 <th>Nom Complet</th>
                                 <th>Téléphone</th>
-                                <th>Role</th>
+                                <th>Catégorie</th>
                                 <th>Expire le</th>
-                                <th>Status</th>
+                                <th>Statut</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -48,13 +46,12 @@
                     <tbody>
                         @foreach ($readers as $index => $reader)
                             <tr>
-                                <td>{{ $reader->id }}</td>
                                 <td>{{ $reader->npi }}</td>
                                 <td>{{ $reader->lastname." ".$reader->firstname }}</td>
                                 <td>{{ $reader->phone_number }}</td>
                                 <td>{{ $reader->role }}</td>
                                 <td>{{ date('d-m-Y', strtotime($reader->registrations()->latest()->first()->end_date)) }}</td>
-                                <td><i class="fa fa-circle {{ $reader->status ? 'actif' : 'inactif' }}"></i></td>
+                                <td><i class="fa fa-circle {{ $reader->status ? 'actif' : 'inactif' }}"></i> {{ $reader->status ? 'Actif' : 'Inactif' }}</td>
                                 <td class="d-flex">
                                     <a href="{{ '/readers/'.$reader->id.'/edit' }}" class="px-2 py-1" id="pen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer"><i class="fa fa-pen"></i></a>
                                     <a href="#" class="px-2 py-1" id="card" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer sa carte"><i class="fa fa-id-card"></i></a>

@@ -7,49 +7,27 @@ use App\Models\Resource;
 
 class TypeOrSubCategoryResources extends Component
 {
-    protected $resources = [];
-
-    public $searchInput;
+    public $searchInput = '';
     public $resourcesLength;
     public $typeOrSubCategoryId;
     public $column;
 
-
-    public function sortOrSearchResource()
+    public function mount()
     {
-        $resourcesQuery = Resource::query();
-
-        if ($this->searchInput) {
-            $resourcesQuery->where(function ($query) {
-                $query->where('title', 'like', '%' . $this->searchInput . '%')
-                    ->orWhere('authors', 'like', '%' . $this->searchInput . '%')
-                    ->orWhere('keywords', 'like', '%' . $this->searchInput . '%')
-                    ->orWhere('edition', 'like', '%' . $this->searchInput . '%');
-            });
-        }
-        else
-        {
-
-            $this->resources = $resourcesQuery->where($this->column, $this->typeOrSubCategoryId)->orderByDesc('id')->paginate(6);
-            $this->resourcesLength = $this->resources->total();
-        }
-
-        $this->resources = $resourcesQuery->where($this->column, $this->typeOrSubCategoryId)->orderByDesc('id')->paginate(6);
+        $this->resourcesLength = Resource::count();
     }
-
-
-    public function updatedSearchInput()
-    {
-        $this->sortOrSearchResource();
-    }
-
 
     public function render()
     {
-        $this->sortOrSearchResource();
+        $resources = Resource::where(function ($query) {
+            $query->where('title', 'like', '%' . $this->searchInput . '%')
+                ->orWhere('authors', 'like', '%' . $this->searchInput . '%')
+                ->orWhere('keywords', 'like', '%' . $this->searchInput . '%')
+                ->orWhere('edition', 'like', '%' . $this->searchInput . '%');
+        })->where($this->column, $this->typeOrSubCategoryId)->orderByDesc('id')->paginate(6);
 
         return view('livewire.type-or-sub-category-resources', [
-            'resources' => $this->resources,
+            'resources' => $resources,
         ]);
     }
 }

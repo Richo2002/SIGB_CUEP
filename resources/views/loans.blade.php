@@ -72,7 +72,12 @@
                           </nav>
                     </div>
 
-                    <p class="mb-4">Le tableau présente les détails des prêts enrégistrer.</p>
+                    @if (Auth::user()->role=="Bibliothécaire")
+                        <p class="mb-4">Le tableau présente les détails des prêts enrégistrer, avec une option d'action pour récuperer les resources empruntées.</p>
+                    @else
+                        <p class="mb-4">Le tableau présente les détails des prêts enrégistrer.</p>
+                    @endif
+
 
                     @livewire('loan')
 
@@ -101,13 +106,6 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
 
     <script>
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
