@@ -22,6 +22,8 @@ class AddLoanForm extends Component
         {
             $groups = Group::group()->whereHas('responsable', function($query) {
                 $query->where('status', true);
+            })->whereDoesntHave('loans', function($query) {
+                $query->where('status', '<>', 'Terminé');
             })->get();
         }
 

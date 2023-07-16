@@ -22,8 +22,9 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h6 class="card-title">{{ $resource->authors }}</h6>
+                                    <h6 class="card-title">{{ Str::words($resource->authors, 4, '...') }}</h6>
                                     <p class="card-text">{{ Str::words($resource->title, 12, ' ...') }}</p>
+                                    <p>{{ ($resource->available_number > 0 && $resource->status) ? 'Disponible' : 'Indisponible' }} <i class="fa fa-circle {{ ($resource->available_number > 0 && $resource->status) ? 'actif' : 'inactif' }}"></i></p>
                                     <a href="/resources/{{ $resource->id }}" class="btn see-more-btn">Voir plus</a>
                                 </div>
                             </div>

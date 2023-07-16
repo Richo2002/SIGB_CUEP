@@ -101,6 +101,7 @@ class ReservationController extends Controller
 
         foreach ($reservations as $reservation) {
             $reservation->update(['status' => "Expiré"]);
+            $reservation->resources()->increment('available_number');
         }
     }
 }

@@ -82,9 +82,13 @@
                     @endif
                     <tbody>
                         @foreach ($resources as $index => $resource)
-                            <tr>
+                            <tr wire:key="{{ $resource->id }}">
                                 <td>
-                                    <input x-model="selections" type="checkbox" value="{{ $resource->id }}" {{ ($resource->available_number > 0 && $resource->status == true && $hasNoActiveReservation == true && $currentInstitute == $resource->institute_id) ? '' : 'disabled' }}>
+                                    <input x-model="selections" type="checkbox" value="{{ $resource->id }}" {{ ($resource->available_number > 0 && $resource->status == true && $hasNoActiveReservation == true && $currentInstitute == $resource->institute_id) ? '' : 'disabled' }}
+                                    x-bind:data-toggle="selections.length >= 2 ? (selections.includes('{{ $resource->id }}') ? null : 'modal') : null"
+                                    x-bind:data-target="selections.length >= 2 ? (selections.includes('{{ $resource->id }}') ? null : '#staticBackdrop3') : null"
+                                    x-on:click="selections.length >= 2 ? (selections.includes('{{ $resource->id }}') ? null : event.preventDefault()) : null"
+                                    >
                                 </td>
                                 @if (Auth::user()->role=="Bibliothécaire")
                                     <td>{{ $resource->registration_number }}</td>
@@ -100,8 +104,10 @@
                                 <td>{{ $resource->authors }}</td>
                                 @if (Auth::user()->role!="Bibliothécaire")
                                     <td>{{ $resource->page_number }}</td>
+                                    <td><i class="fa fa-circle {{ ($resource->available_number > 0 && $resource->status) ? 'actif' : 'inactif' }}"></i> {{ ($resource->available_number > 0 && $resource->status) ? 'Oui ('.$resource->available_number.')' : 'Non' }}</td>
+                                @else
+                                    <td><i class="fa fa-circle {{ $resource->available_number > 0 ? 'actif' : 'inactif' }}"></i> {{ $resource->available_number > 0 ? 'Oui ('.$resource->available_number.')' : 'Non' }}</td>
                                 @endif
-                                <td><i class="fa fa-circle {{ $resource->available_number > 0 ? 'actif' : 'inactif' }}"></i> {{ $resource->available_number > 0 ? 'Oui' : 'Non' }}</td>
                                 @if (Auth::user()->role=="Bibliothécaire")
                                     <td>{{ $resource->status ? 'Actif' : 'Inactif' }}</td>
                                 @endif
@@ -109,7 +115,7 @@
                                     <a href="{{ '/resources/'.$resource->id.'/edit' }}" class="px-2 py-1" id="pen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer"><i class="fa fa-pen"></i></a>
                                     <a href="" x-on:click.prevent="currentResourceAuthors = '{{ $resource->authors }}'; currentResourceDigitalVersion = '{{ $resource->digital_version }}'" wire:click.prevent="getFileDetails({{ $resource->id }})" class="px-2 py-1 {{ $resource->digital_version ? '' : 'disabled' }}" id="download" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop2" title="Téléchargement"><i class="fa fa-download"></i></a>
                                     @if (Auth::user()->role=="Bibliothécaire")
-                                        <a href="" wire:key="{{ $resource->id }}" x-on:click.prevent="currentResourceId = {{ $resource->id }}; currentResourceStatus = {{ $resource->status }}" class="px-2 py-1{{ ($resource->available_number != $resource->copies_number) ? ' disabled' : '' }}" id="{{ $resource->status ? 'ban' : 'check' }}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="{{ $resource->status ? 'Désactiver la resource' : 'Activer la resource' }}">
+                                        <a href="" x-on:click.prevent="currentResourceId = {{ $resource->id }}; currentResourceStatus = {{ $resource->status }}" class="px-2 py-1{{ ($resource->available_number != $resource->copies_number) ? ' disabled' : '' }}" id="{{ $resource->status ? 'ban' : 'check' }}" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="{{ $resource->status ? 'Désactiver la resource' : 'Activer la resource' }}">
                                             @if ($resource->status)
                                                 <i class="fa fa-ban"></i>
                                             @else
@@ -155,7 +161,10 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.changeStatus(currentResourceId, currentResourceStatus)" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.changeStatus(currentResourceId, currentResourceStatus)" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading>
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         <span x-show="!currentResourceStatus">Activer</span>
                         <span x-show="currentResourceStatus">Désactiver</span>
                     </button>
@@ -165,7 +174,7 @@
     </div>
 
     <div class="modal fade" id="staticBackdrop2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -177,13 +186,37 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    Êtes-vous sûr de vouloir télécharger la ressource de : <span x-html="currentResourceAuthors"></span> au format {{ $extension }} d'une taille de {{ $size }} Mo?
+                    <p wire:loading wire:target="getFileDetails">Chargement ...</p>
+                    <p wire:loading.remove>Êtes-vous sûr de vouloir télécharger la ressource de : <span x-html="currentResourceAuthors"></span> au format {{ $extension }} d'une taille de {{ $size }} Mo?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <button x-on:click="$wire.download(currentResourceDigitalVersion)" wire:loading.attr="disabled" class="btn btn-logout">
                         Télercharger
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="staticBackdrop3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true" wire:ignore.self>
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">
+                        Réservation de resource
+                    </h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Vous ne pouvez pas réserver ou emprunter plus de 2 ressources.</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Fermer</button>
                 </div>
             </div>
         </div>

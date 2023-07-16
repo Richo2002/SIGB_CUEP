@@ -42,7 +42,7 @@
                     @endif
                     <tbody>
                         @foreach ($sub_categories as $index => $sub_category)
-                            <tr>
+                            <tr wire:key="{{ $sub_category->id }}">
                                 <td>{{ $sub_category->classification_number }}</td>
                                 <td>{{ $sub_category->name }}</td>
                                 <td>{{ count($sub_category->resources) }}</td>
@@ -75,7 +75,10 @@
                 <div class="modal-body">Êtes-vous sûr de vouloir continuer ? Cette action est irréversible et les données supprimées ne pourront pas être récupérées.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.delete(currentSubCategoryId)" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.delete(currentSubCategoryId)" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading>
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         Supprimer
                     </button>
                 </div>

@@ -35,6 +35,7 @@ class Loan extends Component
 
     public function getLoanedResources($currentLoanId)
     {
+        sleep(1);
         $loan = ModelsLoan::findOrFail($currentLoanId);
         $this->resources = $loan->resources;
     }

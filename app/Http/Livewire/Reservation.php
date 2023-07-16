@@ -35,13 +35,13 @@ class Reservation extends Component
 
     public function getReservedResources($currentReservationId)
     {
+        sleep(1);
         $reservation = ModelsReservation::findOrFail($currentReservationId);
         $this->resources = $reservation->resources;
     }
 
     public function lend(int $currentReservationId)
     {
-
         $reservation = ModelsReservation::findOrFail($currentReservationId);
 
         $resourceIds = $reservation->resources->pluck('id')->toArray();

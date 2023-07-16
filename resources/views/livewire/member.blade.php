@@ -62,7 +62,7 @@
                         </tr>
                     </tfoot>
                     <tbody>
-                        <tr>
+                        <tr wire:key="{{ $group->responsable->id }}">
                             <td>{{ $group->responsable->lastname." ".$group->responsable->firstname }}</td>
                             <td>{{ $group->responsable->phone_number }}</td>
                             <td>{{ "Responsable" }}</td>
@@ -74,7 +74,7 @@
                             @endif
                         </tr>
                         @foreach ($members as $index => $member)
-                            <tr>
+                            <tr wire:key="{{ $member->id }}">
                                 <td>{{ $member->lastname." ".$member->firstname }}</td>
                                 <td>{{ $member->phone_number }}</td>
                                 <td>{{ "Membre" }}</td>
@@ -110,7 +110,10 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.remove(currentMemberId, {{ $group->id }})" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.remove(currentMemberId, {{ $group->id }})" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading>
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         Retirer
                     </button>
                 </div>

@@ -46,7 +46,7 @@ class Institute extends Component
     {
         $institutes = ModelsInstitute::where('name', 'LIKE', '%'.$this->searchInput.'%')
                                     ->orWhere('address', 'LIKE', '%'.$this->searchInput.'%')
-                                    ->orWhereHas('librarian', function($query) {
+                                    ->orWhereHas('user', function($query) {
                                         $query->where('firstname', 'LIKE', '%'.$this->searchInput.'%')
                                         ->orWhere('lastname', 'LIKE', '%'.$this->searchInput.'%');
                                         })->orderByDesc('id')->paginate(10);

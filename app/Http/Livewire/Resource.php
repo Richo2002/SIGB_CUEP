@@ -31,7 +31,7 @@ class Resource extends Component
         if(Auth::user()->role!="Bibliothécaire")
         {
             $lastReservation = $user->reservations()->latest()->first();
-            $this->hasNoActiveReservation = $lastReservation ? $lastReservation->where('status', '<>', 'En cour')->exists() : true;
+            $this->hasNoActiveReservation = ($lastReservation && $lastReservation->status != 'En cour') ? true : false;
 
             $registration = $user->registrations()->latest()->first();
             $this->currentInstitute = $registration->institute_id;
@@ -88,8 +88,9 @@ class Resource extends Component
 
     public function getFileDetails($currentResourceId)
     {
-        $resource = ModelsResource::where('id', $currentResourceId)->firstOrFail();
+        sleep(1);
 
+        $resource = ModelsResource::where('id', $currentResourceId)->firstOrFail();
         $this->size = Storage::size('public/digitalVersions/'.$resource->digital_version);
         $this->size = round($this->size / 1048576, 5);
         $this->extension = File::extension('public/digitalVersions/'.$resource->digital_version);

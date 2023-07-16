@@ -45,7 +45,7 @@
                     @endif
                     <tbody>
                         @foreach ($readers as $index => $reader)
-                            <tr>
+                            <tr wire:key="{{ $reader->id }}">
                                 <td>{{ $reader->npi }}</td>
                                 <td>{{ $reader->lastname." ".$reader->firstname }}</td>
                                 <td>{{ $reader->phone_number }}</td>
@@ -102,7 +102,10 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.changeStatus(currentReaderId, currentReaderStatus)" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.changeStatus(currentReaderId, currentReaderStatus)" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading>
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         <span x-show="!currentReaderStatus">Activer</span>
                         <span x-show="currentReaderStatus">Désactiver</span>
                     </button>

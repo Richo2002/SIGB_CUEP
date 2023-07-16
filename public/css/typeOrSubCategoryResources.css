@@ -16,7 +16,12 @@
     border-right: none;
 }
 
-.error
+.error, .inactif
 {
     color: rgb(231, 63, 26);
+}
+
+.actif
+{
+    color: rgba(0, 133, 89) !important;
 }

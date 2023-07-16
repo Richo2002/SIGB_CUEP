@@ -42,15 +42,15 @@
                     @endif
                     <tbody>
                         @foreach ($reservations as $index => $reservation)
-                            <tr>
+                            <tr wire:key="{{ $reservation->id }}">
                                 <td>{{ $reservation->reader->lastname." ".$reservation->reader->firstname }}</td>
                                 <td>
-                                    {{ count($reservation->resources) }}<a href="" wire:click.prevent="getReservedResources({{ $reservation->id }})" class="px-2 py-1" id="eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Voir les resources" data-toggle="modal" data-target="#staticBackdrop2"><i class="fa fa-eye"></i></a>
+                                    {{ count($reservation->resources) }}<a href="" wire:click.prevent="getReservedResources({{ $reservation->id }})" class="px-2 py-1" id="eye" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Voir les resources" data-toggle="modal" data-target="#staticBackdrop2"><i class="fa fa-eye" x-cloack></i></a>
                                 </td>
                                 <td>{{ $reservation->start_date }}</td>
                                 <td>{{ date('d-m-Y', strtotime($reservation->end_date)) }}</td>
                                 @if ($reservation->status == "En cour" )
-                                    <td><i class="fa fa-circle actif"></i></td>
+                                    <td><i class="fa fa-circle actif"></i> En cour</td>
                                 @else
                                     <td>{{ $reservation->status }}</td>
                                 @endif
@@ -70,7 +70,7 @@
         </div>
     </div>
     <div class="modal fade" id="staticBackdrop2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+    aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -82,7 +82,8 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   <ul>
+                   <p wire:loading wire:target="getReservedResources">Chargement ...</p>
+                   <ul wire:loading.remove>
                         @foreach ($resources as $resource)
                             <li>{{ $resource->type->name." : ".$resource->title }}</li>
                         @endforeach

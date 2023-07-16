@@ -42,7 +42,7 @@
                     @endif
                     <tbody>
                         @foreach ($librarians as $index => $librarian)
-                            <tr>
+                            <tr wire:key="{{ $librarian->id }}">
                                 <td>{{ $librarian->lastname." ".$librarian->firstname }}</td>
                                 <td>{{ $librarian->phone_number }}</td>
                                 <td>{{ $librarian->email }}</td>

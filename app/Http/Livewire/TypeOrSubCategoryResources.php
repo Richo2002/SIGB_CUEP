@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Livewire\Component;
 use App\Models\Resource;
+use Livewire\WithPagination;
 
 class TypeOrSubCategoryResources extends Component
 {
@@ -12,9 +13,24 @@ class TypeOrSubCategoryResources extends Component
     public $typeOrSubCategoryId;
     public $column;
 
+    use WithPagination;
+
     public function mount()
     {
         $this->resourcesLength = Resource::count();
+    }
+
+    public function updating($name, $value)
+    {
+        if($name === 'searchInput')
+        {
+            $this->resetPage();
+        }
+    }
+
+    public function paginationView()
+    {
+        return 'livewire.pagination';
     }
 
     public function render()

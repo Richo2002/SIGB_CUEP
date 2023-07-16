@@ -63,7 +63,7 @@
                     @endif
                     <tbody>
                         @foreach ($groups as $index => $group)
-                            <tr>
+                            <tr wire:key="{{ $group->id }}">
                                 <td>{{ $group->name }}</td>
                                 <td>{{ count($group->readers) + 1 }}</td>
                                 <td>{{ $group->responsable->lastname." ".$group->responsable->firstname }}</td>
@@ -100,7 +100,10 @@
                 <div class="modal-body">Êtes-vous sûr de vouloir continuer ? Cette action est irréversible et les données supprimées ne pourront pas être récupérées.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
-                    <button x-on:click="$wire.delete(currentGroupId)" wire:loading.attr="disabled" wire:target="delete" class="btn btn-logout">
+                    <button x-on:click="$wire.delete(currentGroupId)" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading>
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         Supprimer
                     </button>
                 </div>
