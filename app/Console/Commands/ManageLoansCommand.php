@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\ReaderController;
 
 class ManageLoansCommand extends Command
 {
@@ -40,5 +41,8 @@ class ManageLoansCommand extends Command
     {
         $loanController = new LoanController();
         $loanController->manageDelays();
+
+        $readerController = new ReaderController();
+        $readerController->sendNotificationToLateReader();
     }
 }

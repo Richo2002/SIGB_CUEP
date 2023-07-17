@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\User;
+use App\Models\Institute;
 use App\Models\Registration;
 use Illuminate\Http\Request;
 use App\Http\Requests\ReaderRequest;
-use App\Models\Institute;
+use App\Notifications\LateReaderNotification;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 
 class ReaderController extends Controller
 {
@@ -115,5 +117,23 @@ class ReaderController extends Controller
         foreach ($readers as $reader) {
             $reader->update(['status' => false]);
         }
+    }
+
+    public function sendNotificationToLateReader()
+    {
+        $today = Carbon::today();
+
+        $readers = User::where('role', '<>' ,'Administrateur')
+                        ->where('role', '<>' ,'Bibliothécaire')
+                        ->whereHas('loans', function($query) use($today){
+                            $query->where('status', "Retard")
+                            ->orWhere(function($query) use($today){
+                                $query->where('end_date', $today)->where('status', "En cour");
+                            })
+                            ->orderByDesc('id')
+                            ->limit(1);
+                        })->get();
+
+        Notification::send($readers, new LateReaderNotification());
     }
 }

@@ -2,6 +2,5 @@
 
 {{ $message }}
 
-Cordialement,<br>
-{{ config('app.name') }}
+Cordialement, {{ config('app.name') }}
 @endcomponent

@@ -51,13 +51,17 @@ class NewAccountNotification extends Notification
             'email' => $notifiable->getEmailForPasswordReset(),
         ], false));
 
+        $name = $this->user->lastname." ".$this->user->firstname;
+
         return (new MailMessage)
                     ->subject('Création de compte '.$this->user->role. ' réussie')
+                    ->greeting('Cher(e) ' . $name . ',')
                     ->line('Nous sommes ravis de vous informer que votre compte '.$this->user->role.' a été créé avec succès !')
                     ->line('Veuillez cliquer sur le bouton ci-dessous pour définir votre mot de passe :')
                     ->action('Continuer', $url)
                     ->line("Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à nous contacter à l'adresse mesrs.cuepinfos@gouv.bj")
-                    ->line("Nous vous remercions d'avoir rejoint notre application !");
+                    ->line("Nous vous remercions d'avoir rejoint notre application !")
+                    ->salutation('Cordialement, ' . config('app.name'));
     }
 
     /**
