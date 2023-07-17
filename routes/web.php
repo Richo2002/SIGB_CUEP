@@ -62,3 +62,17 @@ Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resourc
 
 
 require __DIR__.'/auth.php';
+
+
+Route::get('/disable-reader-accounts', function () {
+    \Illuminate\Support\Facades\Artisan::call('readers:disable');
+});
+
+Route::get('/manage-loans', function () {
+    \Illuminate\Support\Facades\Artisan::call('loans:manage');
+});
+
+Route::get('/manage-reservations', function () {
+    \Illuminate\Support\Facades\Artisan::call('reservations:manage');
+});
+

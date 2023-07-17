@@ -18,17 +18,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->call(function () {
-
-            $readerController = new ReaderController();
-            $readerController->disableReader();
-
-            $loanController = new LoanController();
-            $loanController->manageDelays();
-
-            $reservationController = new ReservationController();
-            $reservationController->manageDelays();
-        })->daily();
+        //
     }
 
     /**
