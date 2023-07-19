@@ -34,7 +34,7 @@ class ResourceRequest extends FormRequest
             'registration_number' => ['required', 'integer', 'regex:/^[0-9]+$/', Rule::unique('resources')->ignore($id ?? null)],
             'title' => ['required', 'string', 'max:150'],
             'cover_page' => ['image', 'max:3072', Rule::unique('resources')->ignore($id ?? null)],
-            'digital_version' => ['nullable','file', 'mimes:pdf,mp4,mp3'],
+            'digital_version' => ['nullable','file', 'mimes:pdf,mp4,mp3,zip'],
             'copies_number' => ['required', 'integer', 'regex:/^[0-9]+$/'],
             'page_number' => ['required', 'integer', 'regex:/^[0-9]+$/'],
             'keywords' => ['required', 'string', 'max:255'],

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\LoanController;
+use App\Http\Controllers\GroupController;
 use App\Http\Controllers\ReaderController;
 
 class ManageLoansCommand extends Command
@@ -44,5 +45,8 @@ class ManageLoansCommand extends Command
 
         $readerController = new ReaderController();
         $readerController->sendNotificationToLateReader();
+
+        $groupController = new GroupController();
+        $groupController->sendNotificationToLateGroupMembers();
     }
 }

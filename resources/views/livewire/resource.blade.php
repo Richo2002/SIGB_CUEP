@@ -162,7 +162,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <button x-on:click="$wire.changeStatus(currentResourceId, currentResourceStatus)" wire:loading.attr="disabled" class="btn btn-logout">
-                        <span wire:loading>
+                        <span wire:loading wire:target="changeStatus">
                             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                         </span>
                         <span x-show="!currentResourceStatus">Activer</span>
@@ -187,11 +187,14 @@
                 </div>
                 <div class="modal-body">
                     <p wire:loading wire:target="getFileDetails">Chargement ...</p>
-                    <p wire:loading.remove>Êtes-vous sûr de vouloir télécharger la ressource de : <span x-html="currentResourceAuthors"></span> au format {{ $extension }} d'une taille de {{ $size }} Mo?</p>
+                    <p wire:loading.remove wire:target="getFileDetails">Êtes-vous sûr de vouloir télécharger la ressource de : <span x-html="currentResourceAuthors"></span> au format {{ $extension }} d'une taille de {{ $size }} Mo?</p>
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <button x-on:click="$wire.download(currentResourceDigitalVersion)" wire:loading.attr="disabled" class="btn btn-logout">
+                        <span wire:loading wire:target="download">
+                            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        </span>
                         Télercharger
                     </button>
                 </div>

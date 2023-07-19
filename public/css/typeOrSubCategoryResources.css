@@ -25,3 +25,9 @@
 {
     color: rgba(0, 133, 89) !important;
 }
+
+.reservation-btn, .reservation-btn:hover
+{
+    background-color: #f0a945;
+    color: white;
+}

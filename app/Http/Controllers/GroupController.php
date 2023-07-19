@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Group;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\LateGroupMembersNotification;
 
 class GroupController extends Controller
 {
@@ -23,6 +25,7 @@ class GroupController extends Controller
      */
     public function index()
     {
+        $this->sendNotificationToLateGroupMembers();
         return view('groups');
     }
 
@@ -77,6 +80,37 @@ class GroupController extends Controller
 
 
         return redirect()->route('groups.index')->with(['message' => 'Mis à jour réussie']);
+    }
+
+    public function sendNotificationToLateGroupMembers()
+    {
+
+
+        $readers = User::where('role', '<>' ,'Administrateur')
+                        ->where('role', '<>' ,'Bibliothécaire')
+                        ->where(function($query){
+                            $query->whereHas('groups', function($query) {
+                                $query->whereHas('loans', function($query) {
+                                    $query->where('status', "Retard")
+                                    ->orWhere(function($query) {
+                                         $query->whereRaw('DATEDIFF(CURDATE(), end_date) >= -2')->where('status', "En cour");
+                                    })
+                                    ->orderByDesc('id')
+                                    ->limit(1);
+                                });
+                            })->orWhereHas('group', function($query) {
+                                $query->whereHas('loans', function($query) {
+                                    $query->where('status', "Retard")
+                                    ->orWhere(function($query) {
+                                         $query->whereRaw('DATEDIFF(CURDATE(), end_date) >= -2')->where('status', "En cour");
+                                    })
+                                    ->orderByDesc('id')
+                                    ->limit(1);
+                                });
+                            });
+                        })->get();
+
+        Notification::send($readers, new LateGroupMembersNotification());
     }
 
 }

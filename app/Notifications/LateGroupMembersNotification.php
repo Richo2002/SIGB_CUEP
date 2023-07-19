@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class LateReaderNotification extends Notification
+class LateGroupMembersNotification extends Notification
 {
     use Queueable;
 
@@ -44,8 +44,8 @@ class LateReaderNotification extends Notification
         return (new MailMessage)
             ->subject('Retour des ressources empruntées')
             ->greeting('Cher(e) ' . $name . ',')
-            ->line('Nous vous rappelons de bien vouloir retourner à temps les ressources que vous avez empruntées à la bibliothèque. Le dépassement de la date de retour peut entraîner des pénalités ou des restrictions d\'emprunt')
-            ->line('Merci de vous rendre à la bibliothèque dès que possible pour effectuer le retour des ressources empruntées.')
+            ->line('Nous vous rappelons de bien vouloir retourner à temps les ressources que votre groupe a empruntées à la bibliothèque. Le dépassement de la date de retour peut entraîner des pénalités ou des restrictions d\'emprunt')
+            ->line('Merci de vous concerter avec les autres membres de votre groupe afin que l\'un de vous se rend  à la bibliothèque pour effectuer le retour des ressources empruntées.')
             ->salutation('Cordialement, ' . config('app.name'));
     }
 

@@ -25,7 +25,14 @@
                                     <h6 class="card-title">{{ Str::words($resource->authors, 4, '...') }}</h6>
                                     <p class="card-text">{{ Str::words($resource->title, 12, ' ...') }}</p>
                                     <p>{{ ($resource->available_number > 0 && $resource->status) ? 'Disponible' : 'Indisponible' }} <i class="fa fa-circle {{ ($resource->available_number > 0 && $resource->status) ? 'actif' : 'inactif' }}"></i></p>
-                                    <a href="/resources/{{ $resource->id }}" class="btn see-more-btn">Voir plus</a>
+                                    <div>
+                                        <a href="/resources/{{ $resource->id }}" class="btn see-more-btn">Voir plus</a>
+                                        @if (!Auth::user())
+                                            <a href="/resources" class="btn reservation-btn">Réserver</a>
+                                        @elseif (Auth::user()->role != "Administrateur" && Auth::user()->role != "Bibliothécaire")
+                                            <a href="/resources" class="btn reservation-btn">Réserver</a>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>

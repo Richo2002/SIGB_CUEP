@@ -121,14 +121,13 @@ class ReaderController extends Controller
 
     public function sendNotificationToLateReader()
     {
-        $today = Carbon::today();
 
         $readers = User::where('role', '<>' ,'Administrateur')
                         ->where('role', '<>' ,'Bibliothécaire')
-                        ->whereHas('loans', function($query) use($today){
+                        ->whereHas('loans', function($query) {
                             $query->where('status', "Retard")
-                            ->orWhere(function($query) use($today){
-                                $query->where('end_date', $today)->where('status', "En cour");
+                            ->orWhere(function($query) {
+                                $query->whereRaw('DATEDIFF(CURDATE(), end_date) <= 2')->where('status', "En cour");
                             })
                             ->orderByDesc('id')
                             ->limit(1);

@@ -56,7 +56,7 @@
                                 <td>{{ $loan->start_date }}</td>
                                 <td>{{ date('d-m-Y', strtotime($loan->end_date)) }}</td>
                                 @if ($loan->status == "Retard" )
-                                    <td><i class="fa fa-circle inactif"></i> Retard</td>
+                                    <td><i class="fa fa-circle inactif"></i> Retard ({{ (Carbon\Carbon::parse($loan->end_date))->diffInDays(Carbon\Carbon::today())." jours" }})</td>
                                 @else
                                     <td>{{ $loan->status }}</td>
                                 @endif
@@ -93,7 +93,7 @@
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Annuler</button>
                     <button x-on:click="$wire.retrieve(currentLoanId)" wire:loading.attr="disabled" class="btn btn-logout">
-                        <span wire:loading>
+                        <span wire:loading wire:target="retrieve">
                             <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
                         </span>
                         Récupérer
@@ -117,7 +117,7 @@
                 </div>
                 <div class="modal-body">
                     <p wire:loading wire:target="getLoanedResources">Chargement ...</p>
-                    <ul wire:loading.remove>
+                    <ul wire:loading.remove wire:target="getLoanedResources">
                         @foreach ($resources as $resource)
                             <li>{{ $resource->type->name." : ".$resource->title }}</li>
                         @endforeach

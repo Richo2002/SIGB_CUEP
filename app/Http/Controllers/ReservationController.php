@@ -60,8 +60,8 @@ class ReservationController extends Controller
      */
     public function store(Request $request)
     {
-        $start_date = Carbon::today();
-        $end_date = $start_date->copy()->addDays(3);
+        $start_date = Carbon::now();
+        $end_date = Carbon::today()->addDays(3);
 
         $reader = User::where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire']])->find(Auth::user()->id);
 

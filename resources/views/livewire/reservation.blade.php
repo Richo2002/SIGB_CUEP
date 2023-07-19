@@ -83,7 +83,7 @@
                 </div>
                 <div class="modal-body">
                    <p wire:loading wire:target="getReservedResources">Chargement ...</p>
-                   <ul wire:loading.remove>
+                   <ul wire:loading.remove wire:target="getReservedResources">
                         @foreach ($resources as $resource)
                             <li>{{ $resource->type->name." : ".$resource->title }}</li>
                         @endforeach

@@ -31,7 +31,7 @@ class Resource extends Component
         if(Auth::user()->role!="Bibliothécaire")
         {
             $lastReservation = $user->reservations()->latest()->first();
-            $this->hasNoActiveReservation = ($lastReservation && $lastReservation->status != 'En cour') ? true : false;
+            $this->hasNoActiveReservation = (!$lastReservation) ? true : (($lastReservation->status != 'En cour') ? true : false);
 
             $registration = $user->registrations()->latest()->first();
             $this->currentInstitute = $registration->institute_id;
