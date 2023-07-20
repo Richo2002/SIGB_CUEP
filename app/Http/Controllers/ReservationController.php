@@ -80,10 +80,7 @@ class ReservationController extends Controller
             $resource = Resource::find($id);
 
             if ($resource) {
-
-                $resource->available_number -= 1;
-
-                $resource->save();
+                $resource->decrement('available_number');
             }
         }
 
@@ -101,7 +98,10 @@ class ReservationController extends Controller
 
         foreach ($reservations as $reservation) {
             $reservation->update(['status' => "Expiré"]);
-            $reservation->resources()->increment('available_number');
+
+            foreach ($reservation->resources as $resource) {
+                $resource->increment('available_number');
+            }
         }
     }
 }

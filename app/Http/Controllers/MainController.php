@@ -52,19 +52,19 @@ class MainController extends Controller
         }
         elseif(Auth::user()->role == "Bibliothécaire")
         {
-            $currentDate = date('Y-m-d');
             $nbr_currents_loans = Loan::loan()->where('status', 'En cour')->get()->count();
             $nbr_currents_reservations = Reservation::reservation()->where('status', 'En cour')->get()->count();
             $nbr_lates_loans = Loan::loan()->where('status', 'Retard')->get()->count();
         }
         else
         {
-            $nbr_reader_loans = Loan::loan()->where('status', 'En cour')
-                            ->where('reader_id', Auth::user()->id)
+            $nbr_reader_loans = Loan::loan()->where('status', 'En cour')->where(function($query){
+                            $query->where('reader_id', Auth::user()->id)
                             ->orWhereHas('group', function($query){
                                 $query->whereHas('readers', function($subQuery){
                                     $subQuery->where('users.id', Auth::user()->id);
                                 });
+                            });
                             })->get()->count();
 
 

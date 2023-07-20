@@ -44,7 +44,9 @@ class Loan extends Component
     {
         $loan = ModelsLoan::findOrFail($currentLoanId);
 
-        $loan->resources()->increment('available_number');
+        foreach ($loan->resources as $resource) {
+            $resource->increment('available_number');
+        }
 
         $loan->status = "Terminé";
         $loan->save();

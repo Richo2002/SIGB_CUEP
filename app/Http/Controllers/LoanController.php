@@ -90,10 +90,7 @@ class LoanController extends Controller
             $resource = Resource::find($id);
 
             if ($resource) {
-
-                $resource->available_number -= 1;
-
-                $resource->save();
+                $resource->decrement('available_number');
             }
         }
 
