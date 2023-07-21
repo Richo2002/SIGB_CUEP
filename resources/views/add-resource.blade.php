@@ -108,8 +108,8 @@
                                             <div class="col-lg-6 col-12 mb-3">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
-                                                        <span class="input-group-text" id="basic-addon1">N°<span class="text-danger fw-bold">*</span></span>
-                                                        <input type="number" class="form-control" placeholder="Entrez son numéro d'enregistrement" required name="registration_number" value="{{ isset($resource) ? $resource->registration_number : old('registration_number') }}" {{ Auth::user()->role === "Bibliothécaire" ? '' : ' readonly ' }}>
+                                                        <span class="input-group-text" id="basic-addon1">N°</span>
+                                                        <input type="number" class="form-control" placeholder="Entrez son numéro d'enregistrement" name="registration_number" value="{{ isset($resource) ? $resource->registration_number : old('registration_number') }}" {{ Auth::user()->role === "Bibliothécaire" ? '' : ' readonly ' }}>
                                                     </div>
                                                     @error('registration_number')
                                                         <div class="col-12 text-danger">{{ $message }}</div>

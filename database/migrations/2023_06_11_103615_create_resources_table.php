@@ -15,7 +15,7 @@ class CreateResourcesTable extends Migration
     {
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
-            $table->string('registration_number');
+            $table->string('registration_number')->nullable();
             $table->string('identification_number')->nullable();
             $table->string('title');
             $table->string('authors');
