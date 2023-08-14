@@ -16,7 +16,7 @@ class ReaderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian');
+        $this->middleware('librarian')->except(['sendNotificationToLateReader', 'disableReader']);
     }
 
      /**
@@ -121,7 +121,6 @@ class ReaderController extends Controller
 
     public function sendNotificationToLateReader()
     {
-
         $readers = User::where('role', '<>' ,'Administrateur')
                         ->where('role', '<>' ,'Bibliothécaire')
                         ->whereHas('loans', function($query) {

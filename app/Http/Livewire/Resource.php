@@ -98,11 +98,11 @@ class Resource extends Component
 
     public function download($digitalVersion)
     {
-        session()->flash('message', 'Le téléchargement a été lancé avec succès.');
-
         $this->emit('closeModal');
 
-        return Storage::download('public/digitalVersions/'.$digitalVersion);
+        $this->emit('initiateDownload', $digitalVersion);
+
+        session()->flash('message', 'Le téléchargement a été lancé avec succès.');
     }
 
 

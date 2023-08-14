@@ -203,4 +203,9 @@ class ResourceController extends Controller
             'id' => $id,
         ]);
     }
+
+    public function download($digitalVersion)
+    {
+         return Storage::download('public/digitalVersions/'.$digitalVersion);
+    }
 }

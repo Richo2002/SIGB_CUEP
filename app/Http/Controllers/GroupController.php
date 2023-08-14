@@ -13,7 +13,7 @@ class GroupController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index']);
+        $this->middleware('librarian')->except(['index', 'sendNotificationToLateGroupMembers']);
         $this->middleware('librarianOrReader')->only(['index']);
 
     }
@@ -83,8 +83,6 @@ class GroupController extends Controller
 
     public function sendNotificationToLateGroupMembers()
     {
-
-
         $readers = User::where('role', '<>' ,'Administrateur')
                         ->where('role', '<>' ,'Bibliothécaire')
                         ->where(function($query){

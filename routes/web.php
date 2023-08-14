@@ -52,17 +52,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profiles/{profile}/edit', [MainController::class, 'editProfile']);
     Route::put('/profiles/{profile}', [MainController::class, 'updateProfile']);
 
-    Route::get('/test', [ReservationController::class, 'manageDelays']);
+    Route::get('resources/{digitalVersion}/download', [ResourceController::class, 'download']);
 });
+
 
 Route::get('resources/types/{id}', [ResourceController::class, 'indexTypes']);
 Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
 
 Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resources.show');
-
-
-require __DIR__.'/auth.php';
-
 
 Route::get('/disable-reader-accounts', function () {
     \Illuminate\Support\Facades\Artisan::call('readers:disable');
@@ -75,4 +72,7 @@ Route::get('/manage-loans', function () {
 Route::get('/manage-reservations', function () {
     \Illuminate\Support\Facades\Artisan::call('reservations:manage');
 });
+
+
+require __DIR__.'/auth.php';
 

@@ -15,7 +15,7 @@ class LoanController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index']);
+        $this->middleware('librarian')->except(['index', 'manageDelays']);
         $this->middleware('librarianOrReader')->only(['index']);
     }
 

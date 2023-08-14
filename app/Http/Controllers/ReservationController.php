@@ -13,7 +13,7 @@ class ReservationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index', 'create', 'store']);
+        $this->middleware('librarian')->except(['index', 'create', 'store', 'manageDelays']);
         $this->middleware('librarianOrReader')->only(['index', 'create', 'store']);
     }
 

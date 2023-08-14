@@ -118,6 +118,10 @@
             $('#staticBackdrop2').modal('hide');
         });
 
+        Livewire.on('initiateDownload', digitalVersion => {
+            // Redirection JavaScript vers l'URL de téléchargement dans le contrôleur
+            window.location.href = 'resources/' + digitalVersion + '/download';
+        });
     </script>
 
 </body>
