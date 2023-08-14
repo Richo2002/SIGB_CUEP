@@ -113,14 +113,14 @@
     @livewireScripts
 
     <script type="text/javascript">
-        window.livewire.on('closeModal', () => {
-            $('#staticBackdrop').modal('hide');
-            $('#staticBackdrop2').modal('hide');
-        });
-
         Livewire.on('initiateDownload', digitalVersion => {
             // Redirection JavaScript vers l'URL de téléchargement dans le contrôleur
             window.location.href = 'resources/' + digitalVersion + '/download';
+        });
+
+        window.livewire.on('closeModal', () => {
+            $('#staticBackdrop').modal('hide');
+            $('#staticBackdrop2').modal('hide');
         });
     </script>
 

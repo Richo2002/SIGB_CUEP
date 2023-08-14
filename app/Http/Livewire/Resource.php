@@ -98,9 +98,9 @@ class Resource extends Component
 
     public function download($digitalVersion)
     {
-        $this->emit('closeModal');
-
         $this->emit('initiateDownload', $digitalVersion);
+
+        $this->emit('closeModal');
 
         session()->flash('message', 'Le téléchargement a été lancé avec succès.');
     }
