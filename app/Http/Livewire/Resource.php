@@ -86,7 +86,7 @@ class Resource extends Component
         $this->resetPage();
     }
 
-    public function getFileDetails($currentResourceId)
+    public function getFileDetails(int $currentResourceId)
     {
         sleep(1);
 
@@ -96,7 +96,7 @@ class Resource extends Component
         $this->extension = File::extension('public/digitalVersions/'.$resource->digital_version);
     }
 
-    public function download($digitalVersion)
+    public function download(string $digitalVersion)
     {
         $this->emit('initiateDownload', $digitalVersion);
 
