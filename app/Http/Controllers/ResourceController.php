@@ -79,10 +79,12 @@ class ResourceController extends Controller
             'edition' => $request->edition,
             'ray' => $request->ray,
             'type_id' => $request->type_id,
-            'sub_category_id' => $request->sub_category_id,
+            'sub_category_id' => $request->sub_sub_category_id ? null : intval($request->sub_category_id),
+            'sub_sub_category_id' => $request->sub_sub_category_id ? intval($request->sub_sub_category_id) : null,
             'authors' => $request->authors,
             'institute_id' => $institute->id,
             'keywords' => $request->keywords,
+            'language' => $request->language,
         ]);
 
         return redirect()->route('resources.index')->with(['message' => 'Enregistrement réussi']);
@@ -165,9 +167,11 @@ class ResourceController extends Controller
         $resource->ray = $request->ray;
         $resource->edition = $request->edition;
         $resource->type_id = $request->type_id;
-        $resource->sub_category_id = $request->sub_category_id;
+        $resource->sub_category_id = $request->sub_sub_category_id ? null : intval($request->sub_category_id);
+        $resource->sub_sub_category_id = $request->sub_sub_category_id ? intval($request->sub_sub_category_id) : null;
         $resource->authors = $request->authors;
         $resource->keywords = $request->keywords;
+        $resource->language = $request->language;
 
         $resource->save();
 

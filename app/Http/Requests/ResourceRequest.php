@@ -44,6 +44,7 @@ class ResourceRequest extends FormRequest
             'category_id' => ['required'],
             'sub_category_id' => ['required'],
             'authors' => ['required', 'string', 'max:150'],
+            'language' => ['required', 'string', Rule::in(['Francais', 'Anglais'])]
         ];
     }
 }

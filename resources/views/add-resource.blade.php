@@ -176,6 +176,24 @@
 
                                             <div class="col-12 mb-3">
                                                 <div class="row">
+                                                    <div class="col-12 input-group d-flex">
+                                                        <label class="input-group-text m-0" for="inputGroupSelect01">Langue<span class="text-danger fw-bold">*</span></label>
+                                                        <select class="form-select flex-grow-1" id="inputGroupSelect01" required name="language" {{ Auth::user()->role === "Bibliothécaire" ? '' : ' disabled ' }}>
+                                                            @if (!isset($resource))
+                                                                <option value="" selected>Choisir la langue de la ressource</option>
+                                                            @endif
+                                                            <option {{ (isset($resource) && ($resource->language == "Francais")) ? 'selected' : '' }} value="Francais">Francais</option>
+                                                            <option {{ (isset($resource) && ($resource->language == "Anglais")) ? 'selected' : '' }} value="Anglais">Anglais</option>
+                                                        </select>
+                                                    </div>
+                                                    @error('language')
+                                                        <div class="col-12 text-danger">Veuillez choisr la langue de la ressource</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 mb-3">
+                                                <div class="row">
                                                     <div class="col-12 input-group">
                                                         <span class="input-group-text" id="basic-addon2">Auteur(s)<span class="text-danger fw-bold">*</span></span>
                                                         <input type="text" class="form-control" placeholder="Entrez le nom complet de ses auteurs" required name="authors" value="{{ isset($resource) ? $resource->authors : old('authors') }}" {{ Auth::user()->role === "Bibliothécaire" ? '' : ' readonly ' }}>

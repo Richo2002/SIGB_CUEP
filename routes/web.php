@@ -16,6 +16,7 @@ use App\Http\Controllers\LoanController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubSubCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('types', TypeController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('categories', CategoryController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('sub-categories', SubCategoryController::class)->except(['show', 'destroy']);
+    Route::resource('sub-categories.sub-sub-categories', SubSubCategoryController::class)->except(['show', 'destroy'])->shallow();
+    Route::get('sub-sub-categories', [SubSubCategoryController::class, 'index'])->name('sub-sub-categories.index');
     Route::resource('readers', ReaderController::class)->except(['show', 'destroy']);
     Route::resource('groups', GroupController::class)->except(['create', 'store', 'show', 'destroy']);
     Route::resource('groups.members', MemberController::class)->except(['create', 'store', 'show', 'edit', 'update', 'destroy']);

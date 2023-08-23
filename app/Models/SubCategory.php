@@ -18,11 +18,27 @@ class SubCategory extends Model implements Auditable
 
 
     /**
-     * Get the resources for the Category.
+     * Get the resources for the Sub Category.
      */
     public function resources()
     {
         return $this->hasMany(Resource::class);
+    }
+
+    /**
+     * Get the resources through the Sub Sub Category.
+     */
+    public function resourcesThroughSubSubCategories()
+    {
+        return $this->hasManyThrough(Resource::class, SubSubCategory::class);
+    }
+
+    /**
+     * Get the Sub Sub Categoies for the Sub Category.
+     */
+    public function sub_sub_categories()
+    {
+        return $this->hasMany(SubSubCategory::class);
     }
 
     /**

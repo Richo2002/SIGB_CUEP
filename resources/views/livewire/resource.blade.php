@@ -44,7 +44,7 @@
                             @endif
                             <th>Photo</th>
                             <th>Titre</th>
-                            <th>Sous Domaine</th>
+                            <th>Niveau de domaine</th>
                             <th>Type</th>
                             <th>Auteur</th>
                             @if (Auth::user()->role!="Bibliothécaire")
@@ -66,7 +66,7 @@
                                 @endif
                                 <th>Photo</th>
                                 <th>Titre</th>
-                                <th>Sous Domaine</th>
+                                <th>Niveau de domaine</th>
                                 <th>Type</th>
                                 <th>Auteur</th>
                                 @if (Auth::user()->role!="Bibliothécaire")
@@ -99,7 +99,7 @@
                                     </div>
                                 </td>
                                 <td>{{ Str::words($resource->title, 10, ' ...') }}</td>
-                                <td>{{ $resource->sub_category->name }}</td>
+                                <td>{{ $resource->sub_sub_category ? $resource->sub_sub_category->name : $resource->sub_category->name }}</td>
                                 <td>{{ $resource->type->name }}</td>
                                 <td>{{ $resource->authors }}</td>
                                 @if (Auth::user()->role!="Bibliothécaire")

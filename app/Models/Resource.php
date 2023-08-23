@@ -26,8 +26,10 @@ class Resource extends Model implements Auditable
         'edition',
         'type_id',
         'sub_category_id',
+        'sub_sub_category_id',
         'institute_id',
-        'keywords'
+        'keywords',
+        'language',
     ];
 
     /**
@@ -36,6 +38,14 @@ class Resource extends Model implements Auditable
     public function sub_category()
     {
         return $this->belongsTo(SubCategory::class);
+    }
+
+    /**
+     * Get the sub category of resource.
+     */
+    public function sub_sub_category()
+    {
+        return $this->belongsTo(SubSubCategory::class);
     }
 
     /**

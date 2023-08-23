@@ -26,11 +26,13 @@ class CreateResourcesTable extends Migration
             $table->integer('page_number');
             $table->boolean('status')->default(true);
             $table->text('keywords');
+            $table->text('language')->default('Francais');
             $table->string('ray')->nullable();
             $table->string('edition')->nullable();
             $table->timestamps();
 
-            $table->foreignId('sub_category_id')->constrained();
+            $table->foreignId('sub_category_id')->nullable()->constrained();
+            $table->foreignId('sub_sub_category_id')->nullable()->constrained();
             $table->foreignId('type_id')->constrained();
             $table->foreignId('institute_id')->constrained();
         });

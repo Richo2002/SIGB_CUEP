@@ -58,6 +58,7 @@
                     <a class="collapse-item" href="/types">Types</a>
                     <a class="collapse-item" href="/categories">Domaines</a>
                     <a class="collapse-item" href="/sub-categories">Sous Domaines</a>
+                    <a class="collapse-item" href="/sub-sub-categories">Sous Sous Domaines</a>
                 </div>
             </div>
         </li>

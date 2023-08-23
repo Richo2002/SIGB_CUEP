@@ -25,7 +25,8 @@
                             <th>Cote</th>
                             <th>Nom</th>
                             <th>Ressource</th>
-                            <th>Domaine</th>
+                            <th>Domaine Parent</th>
+                            <th>Domaine Enfant</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -35,7 +36,8 @@
                                 <th>Cote</th>
                                 <th>Nom</th>
                                 <th>Ressource</th>
-                                <th>Domaine</th>
+                                <th>Domaine Parent</th>
+                                <th>Domaine Enfant</th>
                                 <th>Action</th>
                             </tr>
                         </tfoot>
@@ -47,9 +49,11 @@
                                 <td>{{ $sub_category->name }}</td>
                                 <td>{{ count($sub_category->resources) }}</td>
                                 <td>{{ $sub_category->category->name }}</td>
+                                <td>{{ count($sub_category->sub_sub_categories) }}</td>
                                 <td class="d-flex">
                                     <a href="{{ '/sub-categories/'.$sub_category->id.'/edit' }}" class="px-2 py-1" id="pen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer"><i class="fa fa-pen"></i></a>
-                                    <a href="#" x-on:click.prevent="currentSubCategoryId = {{ $sub_category->id }}" class="px-2 py-1{{ (count($sub_category->resources) > 0) ? ' disabled' : '' }}" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="{{ (count($sub_category->resources) > 0) ? '' : 'Supprimer' }}" ><i class="fa fa-trash"></i></a>
+                                    <a href="{{ '/sub-categories/'.$sub_category->id.'/sub-sub-categories/create' }}" class="px-2 py-1" id="add" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Ajouter une sous sous catégorie"><i class="fa fa-sitemap"></i></a>
+                                    <a href="#" x-on:click.prevent="currentSubCategoryId = {{ $sub_category->id }}" class="px-2 py-1{{ (count($sub_category->resources) > 0) || (count($sub_category->resourcesThroughSubSubCategories) > 0) ? ' disabled' : '' }}" id="trash" data-bs-toggle="tooltip" data-bs-placement="bottom" data-toggle="modal" data-target="#staticBackdrop" title="{{ (count($sub_category->resources) > 0) || (count($sub_category->resourcesThroughSubSubCategories) > 0) ? '' : 'Supprimer' }}" ><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach

@@ -113,6 +113,7 @@ class Resource extends Component
             ->orWhere('registration_number', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('title', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('authors', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('language', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('keywords', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('ray', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('edition', 'LIKE', '%'.$this->searchInput.'%')

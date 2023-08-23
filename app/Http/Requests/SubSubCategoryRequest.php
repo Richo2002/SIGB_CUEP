@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SubCategoryRequest extends FormRequest
+class SubSubCategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,11 @@ class SubCategoryRequest extends FormRequest
      */
     public function rules()
     {
-        $id = Route::current()->parameter('sub_category');
+        $id = Route::current()->parameter('sub_sub_category');
 
         return [
-            'name' => ['required', 'string', 'max:150', Rule::unique('sub_categories')->ignore($id ?? null)],
-            'classification_number' => ['required', 'regex:/^[0-9]+$/', Rule::unique('sub_categories')->ignore($id ?? null)],
-            'category_id' => ['required'],
+            'name' => ['required', 'string', 'max:150', Rule::unique('sub_sub_categories')->ignore($id ?? null)],
+            'classification_number' => ['required', 'regex:/^[0-9]+$/', Rule::unique('sub_sub_categories')->ignore($id ?? null)],
         ];
     }
 }

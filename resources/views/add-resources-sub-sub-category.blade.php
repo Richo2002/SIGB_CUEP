@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CUEP | Domaine</title>
+    <title>CUEP | Sous-Sous-Domaine</title>
 
     <!-- Custom fonts for this template-->
     <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -30,7 +30,7 @@
 
     <link href="/css/modal.css" rel="stylesheet">
 
-    <link href="/css/update-type-or-category-or-group.css" rel="stylesheet">
+    <link href="/css/add-sub-category.css" rel="stylesheet">
 
 </head>
 
@@ -53,31 +53,33 @@
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-2">
-                        <h1 class="h3 mb-0 text-gray-800">Modification d'un nouvel domaine</h1>
+                        <h1 class="h3 mb-0 text-gray-800">{{ isset($sub_sub_category) ? 'Modification d\'un' : 'Ajout d\'un nouvel' }} sous sous domaine</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
-                              <li class="breadcrumb-item"><a href="/categories">Domaines</a></li>
-                              <li class="breadcrumb-item active" aria-current="page">Modifier Domaine</li>
+                              <li class="breadcrumb-item"><a href="/sub-categories">Sous Domianes</a></li>
+                              <li class="breadcrumb-item active" aria-current="page">{{ isset($sub_sub_category) ? 'Modifier' : 'Ajouter' }} sous sous Domaine</li>
                             </ol>
                           </nav>
                     </div>
-                    <p class="mb-4">Remplissez les informations ci-dessous pour modifier un nouvel domaine à la liste.</p>
+                    <p class="mb-4">Remplissez les informations ci-dessous pour {{ isset($sub_sub_category) ? 'modifier' : 'ajouter' }} un nouvel sous sous domaine au domaine <b>{{ $sub_category->name }}</b></p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold" id="main-title">Formulaire de modification de domaine</h6>
+                            <h6 class="m-0 font-weight-bold" id="main-title">Formulaire {{ isset($sub_sub_category) ? 'de modification' : 'd\'ajout' }} de sous sous domaine</h6>
                         </div>
                         <div class="card-body">
-                            <form action="{{ '/categories/'.$category->id }}" method="POST">
+                            <form action="{{ isset($sub_sub_category) ? '/sub-sub-categories/'.$sub_sub_category->id : '/sub-categories/'.$sub_category->id.'/sub-sub-categories' }}" method="POST">
                                 @csrf
-                                @method('PUT')
+                                @if (isset($sub_sub_category))
+                                    @method('PUT')
+                                @endif
                                 <div class="row mb-3">
                                     <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                         <div class="row">
                                             <div class="col-12 input-group">
                                                 <span class="input-group-text" id="basic-addon1">Numéro<span class="text-danger fw-bold">*</span></span>
-                                                <input type="text" class="form-control" placeholder="Entrez le numéro de correspondance" autofocus required name="classification_number" value="{{ isset($category) ? $category->classification_number : old('classification_number') }}">
+                                                <input type="number" class="form-control" placeholder="Entrez le numéro de correspondance" autofocus required name="classification_number" value="{{ isset($sub_sub_category) ? $sub_sub_category->classification_number : old('classification_number') }}">
                                             </div>
                                             @error('classification_number')
                                                 <div class="col-12 text-danger">{{ $message }}</div>
@@ -85,11 +87,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6 col-12">
+                                    <div class="col-lg-6 col-12 mb-3">
                                         <div class="row">
                                             <div class="col-12 input-group">
-                                                <span class="input-group-text" id="basic-addon1">Domaine<span class="text-danger fw-bold">*</span></span>
-                                                <input type="text" class="form-control" placeholder="Entrez un domaine d'activité de ressource"  required name="name" value="{{ isset($category) ? $category->name : old('name') }}">
+                                                <span class="input-group-text" id="basic-addon1">Sous Sous Domaine<span class="text-danger fw-bold">*</span></span>
+                                                <input type="text" class="form-control" placeholder="Entrez un sous sous domaine d'activité de ressource"  required name="name" value="{{ isset($sub_sub_category) ? $sub_sub_category->name : old('name') }}">
                                             </div>
                                             @error('name')
                                                 <div class="col-12 text-danger">{{ $message }}</div>
@@ -97,7 +99,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn" id="submit-btn">Modifier</button>
+                                <button type="submit" class="btn" id="submit-btn">{{ isset($sub_sub_category) ? 'Modifier' : 'Ajouter' }}</button>
                             </form>
                         </div>
                     <div>
