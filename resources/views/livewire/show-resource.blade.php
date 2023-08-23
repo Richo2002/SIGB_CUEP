@@ -3,8 +3,11 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/#catalog" class="text-decoration-none">Catalogue</a></li>
             <li class="breadcrumb-item" aria-current="page"><a href="/resources/types/{{ $resource->type->id }}" class="text-decoration-none">{{ $resource->type->name }}</a></li>
-            <li class="breadcrumb-item  active" aria-current="page">{{ $resource->sub_category->category->name }}</li>
-            <li class="breadcrumb-item active" aria-current="page">{{ $resource->sub_category->name }}</li>
+            <li class="breadcrumb-item  active" aria-current="page">{{ $resource->sub_category ? $resource->sub_category->category->name : $resource->sub_sub_category->sub_category->category->name }}</li>
+            <li class="breadcrumb-item active" aria-current="page">{{ $resource->sub_category ? $resource->sub_category->name : $resource->sub_sub_category->sub_category->name }}</li>
+            @if ($resource->sub_sub_category)
+                <li class="breadcrumb-item active" aria-current="page">{{ $resource->sub_sub_category->name }}</li>
+            @endif
         </ol>
     </nav>
 
@@ -85,6 +88,15 @@
                         <div class="col-12 input-group">
                             <span class="input-group-text" id="basic-addon2">Auteur(s)</span>
                             <input type="text" class="form-control" value="{{ $resource->authors }}" readonly>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <div class="row">
+                        <div class="col-12 input-group">
+                            <span class="input-group-text" id="basic-addon2">Langue</span>
+                            <input type="text" class="form-control" value="{{ $resource->language }}" readonly>
                         </div>
                     </div>
                 </div>
