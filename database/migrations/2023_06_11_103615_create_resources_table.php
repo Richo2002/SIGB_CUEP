@@ -26,7 +26,7 @@ class CreateResourcesTable extends Migration
             $table->integer('page_number');
             $table->boolean('status')->default(true);
             $table->text('keywords');
-            $table->text('language')->default('Francais');
+            $table->text('language');
             $table->string('ray')->nullable();
             $table->string('edition')->nullable();
             $table->timestamps();
