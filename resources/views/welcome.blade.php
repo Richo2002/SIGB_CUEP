@@ -25,29 +25,41 @@
               <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/#home">Accueil</a>
+                    <a class="nav-link active fw-bold" aria-current="page" href="/#home">Accueil</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#catalog">Catalogue</a>
+                    <a class="nav-link fw-bold" href="#catalog">Catalogue</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#contact">Contactez-nous</a>
+                    <a class="nav-link fw-bold" href="#contact">Contactez-nous</a>
                   </li>
                  @if (Auth::user())
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-connect" href="/dashboard">Tableau de bord</a>
+                        <a class="btn btn-connect fw-bold" href="/dashboard">Tableau de bord</a>
                     </li>
                  @else
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-connect rounded" href="/login">Connectez-vous</a>
+                        <a class="btn btn-connect rounded fw-bold" href="/login">Connectez-vous</a>
                     </li>
                  @endif
                 </ul>
               </div>
             </div>
         </nav>
-        <div class="container-fluid">
-            <div id="carouselExampleCaptions" class="carousel slide mx-md-3" data-bs-ride="carousel">
+        <div class="container-fluid position-relative">
+
+            <div class="row position-absolute top-50 w-100 d-flex align-items-center justify-content-center">
+                <div class="col-11 col-lg-8 col-md-8 p-3 rounded" id="searchBar">
+                    <div class="hstack gap-3">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input class="form-control me-auto border border-0" type="text" placeholder="Rechercher une ressource" autofocus>
+                        <div class="vr"></div>
+                        <button type="button" class="btn">Rechercher</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="carouselExampleFade" class="carousel slide carousel-fade mx-md-3" data-bs-ride="carousel">
                 <div class="carousel-inner">
                   <div class="carousel-item active">
                     <img src="/img/b2.jpg" class="d-block w-100" alt="...">
@@ -105,22 +117,43 @@
                     </div>
                     <div class="card-body">
                         @if (count($categories)  > 0)
-                            <div class="accordion" id="accordionExample">
+                            <div class="accordion" id="accordionExample1">
                                 @foreach ($categories as $category)
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingTwo{{ $category->id }}">
+                                        <h2 class="accordion-header" id=hree{{ $category->id }}">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo{{ $category->id }}" aria-expanded="false" aria-controls="collapseTwo">
                                             <i class="fa-solid fa-folder me-2"></i> {{ $category->name }} {{ " (".count($category->resources).")" }}
                                         </button>
                                         </h2>
                                         <div id="collapseTwo{{ $category->id }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ $category->id }}" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body">
-                                            <ul class="list-group">
-                                                @foreach ($category->sub_categories as $sub_category)
-                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}" class="text-decoration-none">{{ $sub_category->name }}</a>{{ " (".count($sub_category->resources).")" }}</li>
-                                                @endforeach
-                                            </ul>
-                                        </div>
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    @foreach ($category->sub_categories as $sub_category)
+                                                        @if (count($sub_category->sub_sub_categories) > 0)
+                                                            <div class="accordion" id="accordionExample2">
+                                                                <div class="accordion-item">
+                                                                    <h2 class="accordion-header" id="headingThree{{ $sub_category->id }}">
+                                                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree{{ $sub_category->id }}" aria-expanded="false" aria-controls="collapseThree">
+                                                                            <i class="fa-solid fa-folder me-2"></i> {{ $sub_category->name }} {{ " (".count($sub_category->resources).")" }}
+                                                                        </button>
+                                                                    </h2>
+                                                                    <div id="collapseThree{{ $sub_category->id }}" class="accordion-collapse collapse" aria-labelledby="headingThree{{ $category->id }}" data-bs-parent="#accordionExample">
+                                                                        <div class="accordion-body">
+                                                                            <ul class="list-group">
+                                                                                @foreach ($sub_category->sub_sub_categories as $sub_sub_category)
+                                                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_sub_category->id }}" class="text-decoration-none">{{ $sub_sub_category->name }}</a>{{ " (".count($sub_sub_category->resources).")" }}</li>
+                                                                                @endforeach
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <li class="list-group-item"><i class="fa-solid fa-folder me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}" class="text-decoration-none">{{ $sub_category->name }}</a>{{ " (".count($sub_category->resources).")" }}</li>
+                                                        @endif
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 @endforeach
