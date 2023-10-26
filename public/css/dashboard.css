@@ -1,0 +1,29 @@
+#statOne, #statFour, #statSeven
+{
+    border-left-color: rgba(34, 88, 166) !important;
+}
+
+#statOne > .card-body > .row > .col > div:first-child, #statFour > .card-body > .row > .col > div:first-child, #statSeven  > .card-body > .row > .col > .text-xs
+{
+    color: rgba(34, 88, 166) !important;
+}
+
+#statTwo, #statFive, #statSix
+{
+    border-left-color: rgba(0, 133, 89) !important;
+}
+
+#statTwo > .card-body > .row > .col > .text-xs, #statFive > .card-body > .row > .col > .text-xs, #statSix  > .card-body > .row > .col > .text-xs
+{
+    color: rgba(0, 133, 89) !important;
+}
+
+#statNine
+{
+    border-left-color: rgba(49, 63, 65, 1) !important;
+}
+
+#statNine > .card-body > .row > .col > div:first-child
+{
+    color: rgba(49, 63, 65, 1) !important;
+}

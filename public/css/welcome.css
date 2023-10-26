@@ -1,0 +1,93 @@
+body
+{
+    font-family: Montserrat, sans-serif !important;
+}
+
+.carousel-item
+{
+    max-height: 97vh !important;
+}
+
+#carouselExampleFade
+{
+    z-index: 1 !important;
+}
+
+.carousel-item > img
+{
+    object-fit: cover !important;
+    z-index: 1;
+}
+
+#searchBar
+{
+    z-index: 2 !important;
+    background-color: white;
+}
+
+#searchBar > .hstack > button
+{
+    background-color: rgba(0, 133, 89);
+    color: white;
+    border-color: rgba(0, 133, 89);
+}
+
+#searchBar > .hstack > input
+{
+    background-color: white;
+    padding: 0;
+    font-size: 1.3em !important;
+
+}
+
+#searchBar > .hstack > input:focus
+{
+    box-shadow: none;
+}
+
+
+.catalog-title, .catalog-title:hover,  .contact-title, .contact-title:hover
+{
+    background-color: rgba(34, 88, 166);
+    color: white;
+    border-radius: 0% !important;
+    cursor:default;
+}
+
+
+#contact p > a
+{
+    color: rgba(34, 88, 166);
+}
+
+#contact
+{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+
+#catalog
+{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.error
+{
+    color: rgb(231, 63, 26);
+}
+
+.static-content
+{
+    color: white;
+    z-index: 1 !important;
+}
+
+
+
+

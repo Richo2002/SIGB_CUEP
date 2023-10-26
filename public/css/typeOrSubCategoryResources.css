@@ -1,0 +1,33 @@
+.list-group-item a,   .breadcrumb-item a
+{
+    color: rgba(34, 88, 166) !important;
+}
+
+#searchInput span
+{
+    background: none;
+    color: rgba(34, 88, 166) !important;
+    border-left: none;
+
+}
+
+#searchInput input
+{
+    border-right: none;
+}
+
+.error, .inactif
+{
+    color: rgb(231, 63, 26);
+}
+
+.actif
+{
+    color: rgba(0, 133, 89) !important;
+}
+
+.reservation-btn, .reservation-btn:hover
+{
+    background-color: #f0a945;
+    color: white;
+}

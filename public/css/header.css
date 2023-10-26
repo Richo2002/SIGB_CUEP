@@ -1,0 +1,31 @@
+.welcome
+{
+    background-color: rgba(206, 213, 212, 1);
+    z-index: 2;
+}
+
+.navbar
+{
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-connect, .btn-connect:hover, .btn-contact, .btn-contact:hover, .see-more-btn, .see-more-btn:hover
+{
+    background-color: rgba(0, 133, 89);
+    color: white;
+}
+
+.nav-item .nav-link
+{
+    color: rgba(34, 88, 166);
+
+}
+
+.nav-item > .active
+{
+    border-bottom: 2px solid #f0a945;
+    color: rgba(34, 88, 166) !important;
+}
+
+

@@ -1,0 +1,16 @@
+.pagination .page-link
+{
+    color: rgba(34, 88, 166);
+}
+
+.pagination .active > .page-link
+{
+    background-color: rgba(34, 88, 166) !important;
+    color: #ffffff;
+    border-color: rgba(34, 88, 166);
+}
+
+.pagination .disabled > .page-link
+{
+    color: rgba(0, 0, 0, 0.5)
+}

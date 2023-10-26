@@ -1,0 +1,28 @@
+footer
+{
+    background-color: #344051;
+    color: #ffffff;
+}
+
+#copyright
+{
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 1;
+}
+
+.flag #green
+{
+    background-color: green;
+}
+
+.flag #yellow
+{
+    background-color: yellow;
+}
+
+
+.flag #red
+{
+    background-color: red;
+}
+
