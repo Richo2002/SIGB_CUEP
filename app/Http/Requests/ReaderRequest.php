@@ -31,7 +31,8 @@ class ReaderRequest extends FormRequest
         return [
             'firstname' => ['required', 'string', 'max:50'],
             'lastname' => ['required', 'string', 'max:25'],
-            'npi' => ['required', 'regex:/^\d{10}$/', Rule::unique('users')->ignore($id ?? null)],
+            'npi' => ['nullable', 'regex:/^\d{10}$/', Rule::unique('users')->ignore($id ?? null)],
+            'registration_number' => ['required', 'regex:/^[a-zA-Z0-9]{12}$/', Rule::unique('users')->ignore($id ?? null)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($id ?? null)],
             'phone_number' => ['required', 'regex:/^\d{8}$/'],
             'address' => ['required', 'string', 'max:100'],

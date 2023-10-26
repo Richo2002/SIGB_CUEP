@@ -107,6 +107,20 @@
                                             <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
+                                                        <span class="input-group-text" id="basic-addon1">Matricule<span class="text-danger fw-bold">*</span></span>
+                                                        <input type="text" class="form-control" placeholder="Entrez son matricule" required name="registration_number" value="{{ isset($reader) ? $reader->registration_number : old('registration_number') }}">
+                                                    </div>
+                                                    @error('registration_number')
+                                                        <div class="col-12 text-danger">Le champ matricule doit comporter 12 caractères.</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-lg-6 col-12 mb-lg-0 mb-3">
+                                                <div class="row">
+                                                    <div class="col-12 input-group">
                                                         <span class="input-group-text" id="basic-addon1">Nom<span class="text-danger fw-bold">*</span></span>
                                                         <input type="text" class="form-control" placeholder="Entrez son nom" required name="lastname" value="{{ isset($reader) ? $reader->lastname : old('lastname') }}">
                                                     </div>
@@ -116,9 +130,7 @@
                                                 </div>
                                             </div>
 
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-lg-6 col-12 mb-lg-0 mb-3">
+                                            <div class="col-lg-6 col-12">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
                                                         <span class="input-group-text" id="basic-addon2">Prénoms<span class="text-danger fw-bold">*</span></span>
@@ -130,7 +142,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6 col-12">
+                                            <!-- <div class="col-lg-6 col-12">
                                                 <div class="row">
                                                     <div class="col-12 input-group d-flex">
                                                         <label class="input-group-text" for="inputGroupSelect01">Catégorie<span class="text-danger fw-bold">*</span></label>
@@ -148,7 +160,7 @@
                                                         <div class="col-12 text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div class="row mb-3">
@@ -174,6 +186,27 @@
                                                         <div class="col-12 text-danger">{{ $message }}</div>
                                                     @enderror
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-12">
+                                                <div class="row">
+                                                    <div class="col-12 input-group d-flex">
+                                                            <label class="input-group-text" for="inputGroupSelect01">Catégorie<span class="text-danger fw-bold">*</span></label>
+                                                            <select class="form-select flex-grow-1" id="inputGroupSelect01" name="role">
+                                                                @if (!isset($reader))
+                                                                    <option value="">Choisir sa catégorie</option>
+                                                                @endif
+                                                                    <option {{ (isset($reader) && ($reader->role == "Etudiant")) ? 'selected' : '' }} value="Etudiant">Etudiant</option>
+                                                                    <option {{ (isset($reader) && ($reader->role == "Professeur")) ? 'selected' : '' }} value="Professeur">Professeur</option>
+                                                                    <option {{ (isset($reader) && ($reader->role == "Personnel")) ? 'selected' : '' }} value="Personnel">Personnel</option>
+                                                                    <option {{ (isset($reader) && ($reader->role == "Autre")) ? 'selected' : '' }} value="Autre">Autre</option>
+                                                            </select>
+                                                        </div>
+                                                        @error('role')
+                                                            <div class="col-12 text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="row mb-3">

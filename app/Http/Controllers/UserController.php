@@ -50,6 +50,7 @@ class UserController extends Controller
             'firstname' => $request->firstname,
             'lastname' => $request->lastname,
             'npi' => $request->npi,
+            'registration_number' => $request->registration_number,
             'email' => $request->email,
             'phone_number' => $request->phone_number,
             'address' => $request->address,
@@ -57,6 +58,8 @@ class UserController extends Controller
             'password' => Hash::make(Str::random(8)),
             'photo' => $request->has('photo') ? $path_convert_to_table[2] : null,
         ]);
+
+        dd($user, $request->registration_number);
 
         $status = Password::sendResetLink(
             $request->only('email'),
@@ -128,6 +131,7 @@ class UserController extends Controller
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->npi = $request->npi;
+        $user->registration_number = $request->registration_number;
         $user->email = $request->email;
         $user->phone_number = $request->phone_number;
         $user->address = $request->address;
