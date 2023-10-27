@@ -83,6 +83,7 @@ class Reader extends Component
             $query->where('lastname', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('firstname', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('npi', 'LIKE', '%'.$this->searchInput.'%')
+            ->orWhere('registration_number', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('phone_number', 'LIKE', '%'.$this->searchInput.'%')
             ->orWhere('email', 'LIKE', '%'.$this->searchInput.'%');
         })->where('role', '<>' ,'Bibliothécaire')

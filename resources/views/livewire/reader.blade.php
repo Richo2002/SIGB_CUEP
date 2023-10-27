@@ -21,7 +21,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                            <th>NPI</th>
+                            <th>Matricule</th>
                             <th>Nom Complet</th>
                             <th>Téléphone</th>
                             <th>Catégorie</th>
@@ -33,7 +33,7 @@
                     @if ($readers->count() > 0)
                         <tfoot>
                             <tr>
-                                <th>NPI</th>
+                                <th>Matricule</th>
                                 <th>Nom Complet</th>
                                 <th>Téléphone</th>
                                 <th>Catégorie</th>
@@ -46,7 +46,7 @@
                     <tbody>
                         @foreach ($readers as $index => $reader)
                             <tr wire:key="{{ $reader->id }}">
-                                <td>{{ $reader->npi }}</td>
+                                <td>{{ $reader->registration_number }}</td>
                                 <td>{{ $reader->lastname." ".$reader->firstname }}</td>
                                 <td>{{ $reader->phone_number }}</td>
                                 <td>{{ $reader->role }}</td>

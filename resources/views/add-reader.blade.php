@@ -95,8 +95,8 @@
                                             <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
-                                                        <span class="input-group-text" id="basic-addon2">NIP<span class="text-danger fw-bold">*</span></span>
-                                                        <input type="text" class="form-control" placeholder="Entrez son NIP" autofocus aria-describedby="basic-addon1" required name="npi" value="{{ isset($reader) ? $reader->npi : old('npi') }}">
+                                                        <span class="input-group-text" id="basic-addon2">NIP</span>
+                                                        <input type="text" class="form-control" placeholder="Entrez son NIP" autofocus aria-describedby="basic-addon1" name="npi" value="{{ isset($reader) ? $reader->npi : old('npi') }}">
                                                     </div>
                                                     @error('npi')
                                                         <div class="col-12 text-danger">{{ $message }}</div>
