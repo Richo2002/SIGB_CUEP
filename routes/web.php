@@ -61,7 +61,10 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('resources/types/{id}', [ResourceController::class, 'indexTypes']);
 Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
+Route::get('resources/sub-categories/{id}', [ResourceController::class, 'indexCategorySubCategories']);
 Route::get('resources/sub-categories/{sub_category_id}/sub-sub-categories/{sub_sub_category_id}', [ResourceController::class, 'indexCategorySubCategorySubSubCategories']);
+
+Route::get('resources/research', [ResourceController::class, 'indexResearch']);
 
 Route::get('resources/{id}', [ResourceController::class, 'show'])->name('resources.show');
 

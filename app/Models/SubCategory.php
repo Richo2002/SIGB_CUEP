@@ -48,4 +48,12 @@ class SubCategory extends Model implements Auditable
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Get the resources for the Category through sub category.
+    */
+    public function subSubCategory_resources()
+    {
+        return $this->hasManyThrough(Resource::class, SubSubCategory::class);
+    }
 }

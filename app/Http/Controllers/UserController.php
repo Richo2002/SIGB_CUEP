@@ -59,8 +59,6 @@ class UserController extends Controller
             'photo' => $request->has('photo') ? $path_convert_to_table[2] : null,
         ]);
 
-        dd($user, $request->registration_number);
-
         $status = Password::sendResetLink(
             $request->only('email'),
             function ($message) use($user) {

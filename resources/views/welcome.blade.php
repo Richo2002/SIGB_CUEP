@@ -50,12 +50,12 @@
 
             <div class="row position-absolute top-50 w-100 d-flex align-items-center justify-content-center">
                 <div class="col-11 col-lg-8 col-md-8 p-3 rounded" id="searchBar">
-                    <div class="hstack gap-3">
+                    <form method="GET" action="resources/research" class="hstack gap-3">
                         <i class="fa-solid fa-magnifying-glass"></i>
-                        <input class="form-control me-auto border border-0" type="text" placeholder="Rechercher une ressource" autofocus>
+                        <input name="searchInput" class="form-control me-auto border border-0" type="text" placeholder="Rechercher une ressource" autofocus required autocomplete="off" maxlength="25">
                         <div class="vr"></div>
-                        <button type="button" class="btn">Rechercher</button>
-                    </div>
+                        <button type="submit" class="btn">Rechercher</button>
+                    </form>
                 </div>
             </div>
 
@@ -120,9 +120,9 @@
                             <div class="accordion" id="accordionExample1">
                                 @foreach ($categories as $category)
                                     <div class="accordion-item">
-                                        <h2 class="accordion-header" id=hree{{ $category->id }}">
+                                        <h2 class="accordion-header" id="headingOne{{ $category->id }}">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo{{ $category->id }}" aria-expanded="false" aria-controls="collapseTwo">
-                                            <i class="fa-solid fa-folder me-2"></i> {{ $category->name }} {{ " (".count($category->resources).")" }}
+                                            <i class="fa-solid fa-folder me-2"></i> {{ $category->name }} {{ " (".$category->totalResourcesCount.")" }}
                                         </button>
                                         </h2>
                                         <div id="collapseTwo{{ $category->id }}" class="accordion-collapse collapse" aria-labelledby="headingTwo{{ $category->id }}" data-bs-parent="#accordionExample">
@@ -134,7 +134,7 @@
                                                                 <div class="accordion-item">
                                                                     <h2 class="accordion-header" id="headingThree{{ $sub_category->id }}">
                                                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree{{ $sub_category->id }}" aria-expanded="false" aria-controls="collapseThree">
-                                                                            <i class="fa-solid fa-folder me-2"></i> {{ $sub_category->name }} {{ " (".count($sub_category->resources).")" }}
+                                                                            <i class="fa-solid fa-folder me-2"></i> {{ $sub_category->name }} {{ " (".count($sub_category->resources) + count($sub_category->subSubCategory_resources).")" }}
                                                                         </button>
                                                                     </h2>
                                                                     <div id="collapseThree{{ $sub_category->id }}" class="accordion-collapse collapse" aria-labelledby="headingThree{{ $category->id }}" data-bs-parent="#accordionExample">

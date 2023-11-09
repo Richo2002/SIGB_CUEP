@@ -19,8 +19,9 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index', 'edit', 'indexTypes', 'indexCategorySubCategories', 'show', 'download']);
+        $this->middleware('librarian')->except(['index', 'edit', 'indexTypes', 'indexCategorySubCategories', 'show', 'download', 'indexResearch']);
         $this->middleware('librarianOrReader')->only(['index', 'edit']);
+        $this->middleware('guest')->only(['index']);
     }
 
     /**
@@ -223,6 +224,13 @@ class ResourceController extends Controller
             'subSubCategory' => $subSubCategory,
             'id' => $sub_sub_category_id,
             'column' => 'sub_sub_category_id',
+        ]);
+    }
+
+    public function indexResearch(Request $request)
+    {
+        return view('resources-searched', [
+            'searchInput' => $request->searchInput
         ]);
     }
 }

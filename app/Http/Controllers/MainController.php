@@ -131,7 +131,18 @@ class MainController extends Controller
         $types = Type::orderBy('name')->get();
         $categories = Category::orderBy('name')->get();
 
-        return view('welcome', [
+        $categories = $categories->map(function ($category) {
+            $resourcesCount = $category->resources()->count();
+            foreach ($category->sub_categories as $subCategory) {
+                foreach ($subCategory->sub_sub_categories as $subSubCategory) {
+                    $resourcesCount += $subSubCategory->resources()->count();
+                }
+            }
+            $category->totalResourcesCount = $resourcesCount;
+            return $category;
+        });    
+
+        return view('welcome', [ 
             'types' => $types,
             'categories' => $categories,
         ]);
