@@ -19,9 +19,8 @@ class ResourceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('librarian')->except(['index', 'edit', 'indexTypes', 'indexCategorySubCategories', 'show', 'download', 'indexResearch']);
+        $this->middleware('librarian')->except(['index', 'edit', 'indexTypes', 'indexCategorySubCategories', 'indexCategorySubCategorySubSubCategories', 'show', 'download', 'indexResearch']);
         $this->middleware('librarianOrReader')->only(['index', 'edit']);
-        $this->middleware('guest')->only(['index']);
     }
 
     /**

@@ -141,7 +141,7 @@
                                                                         <div class="accordion-body">
                                                                             <ul class="list-group">
                                                                                 @foreach ($sub_category->sub_sub_categories as $sub_sub_category)
-                                                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_sub_category->id }}/sub-sub-categories" class="text-decoration-none">{{ $sub_sub_category->name }}</a>{{ " (".count($sub_sub_category->resources).")" }}</li>
+                                                                                    <li class="list-group-item"><i class="fa-solid fa-caret-right me-2"></i><a href="/resources/sub-categories/{{ $sub_category->id }}/sub-sub-categories/{{ $sub_sub_category->id }}" class="text-decoration-none">{{ $sub_sub_category->name }}</a>{{ " (".count($sub_sub_category->resources).")" }}</li>
                                                                                 @endforeach
                                                                             </ul>
                                                                         </div>

@@ -46,6 +46,7 @@ class SubSubCategory extends Component
 
     public function render()
     {
+        dd("oklm");
         $sub_sub_categories = SubSubDomain::where('name', 'LIKE', '%'.$this->searchInput.'%')->orderByDesc('id')->paginate(10);
 
         return view('livewire.sub-sub-category', [
