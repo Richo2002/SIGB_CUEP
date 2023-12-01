@@ -29,13 +29,13 @@ class ReaderRequest extends FormRequest
         $id = Route::current()->parameter('reader');
 
         return [
-            'firstname' => ['required', 'string', 'max:50'],
-            'lastname' => ['required', 'string', 'max:25'],
+            'firstname' => ['required', 'string', 'max:150'],
+            'lastname' => ['required', 'string', 'max:100'],
             'npi' => ['nullable', 'regex:/^\d{10}$/', Rule::unique('users')->ignore($id ?? null)],
             'registration_number' => ['required', 'regex:/^[a-zA-Z0-9]{12}$/', Rule::unique('users')->ignore($id ?? null)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($id ?? null)],
             'phone_number' => ['required', 'regex:/^\d{8}$/'],
-            'address' => ['required', 'string', 'max:100'],
+            'address' => ['required', 'string', 'max:200'],
             'photo' => ['nullable', 'image', 'max:2048'],
             'role' => ['required', Rule::in(['Etudiant', 'Professeur', 'Personnel', 'Autre'])],
         ];

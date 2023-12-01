@@ -43,6 +43,7 @@ class LateReaderNotification extends Notification
         $name = $notifiable->lastname." ".$notifiable->firstname;
         return (new MailMessage)
             ->subject('Retour des ressources empruntées')
+            ->cc('adaniel@gouv.bj')
             ->greeting('Cher(e) ' . $name . ',')
             ->line('Nous vous rappelons de bien vouloir retourner à temps les ressources que vous avez empruntées à la bibliothèque. Le dépassement de la date de retour peut entraîner des pénalités ou des restrictions d\'emprunt')
             ->line('Merci de vous rendre à la bibliothèque dès que possible pour effectuer le retour des ressources empruntées.')

@@ -50,7 +50,7 @@ class CategoryController extends Controller
     {
 
         $request->validate([
-            'name' => ['required', 'string', 'max:100', Rule::unique('categories')->ignore($id ?? null)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('categories')->ignore($id ?? null)],
             'classification_number' => ['required', 'regex:/^[0-9]+$/', Rule::unique('categories')->ignore($id ?? null)],
         ]);
 

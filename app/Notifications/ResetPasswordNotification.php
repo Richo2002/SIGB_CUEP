@@ -3,13 +3,12 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
+use Illuminate\Support\Facades\Password;
 
-class NewAccountNotification extends Notification
+class ResetPasswordNotification extends Notification
 {
     use Queueable;
 
@@ -24,6 +23,7 @@ class NewAccountNotification extends Notification
     {
         $this->user = $user;
     }
+
 
     /**
      * Get the notification's delivery channels.
@@ -54,12 +54,12 @@ class NewAccountNotification extends Notification
         $name = $this->user->lastname." ".$this->user->firstname;
 
         return (new MailMessage)
-                    ->subject('Création de compte '.$this->user->role. ' réussie')
+                    ->subject('Réinitialisation de mot de passe')
                     ->cc('adaniel@gouv.bj')
                     ->greeting('Cher(e) ' . $name . ',')
-                    ->line('Nous sommes ravis de vous informer que votre compte '.$this->user->role.' a été créé avec succès !')
-                    ->line('Veuillez cliquer sur le bouton ci-dessous pour définir votre mot de passe :')
-                    ->action('Continuer', $url)
+                    ->line('Vous recevez cet email car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.')
+                    ->line('Veuillez cliquer sur le bouton ci-dessous pour réinitialiser votre mot de passe :')
+                    ->action('Réinitialiser', $url)
                     ->line("Si vous avez des questions ou rencontrez des problèmes, n'hésitez pas à nous contacter à l'adresse mesrs.cuepinfos@gouv.bj")
                     ->line("Nous vous remercions d'avoir rejoint notre application !")
                     ->salutation('Cordialement, ' . config('app.name'));

@@ -29,7 +29,7 @@ class InstituteRequest extends FormRequest
         $id = Route::current()->parameter('institute');
 
         return [
-            'name' => ['required', 'string', 'max:100', Rule::unique('institutes')->ignore($id ?? null)],
+            'name' => ['required', 'string', 'max:150', Rule::unique('institutes')->ignore($id ?? null)],
             'address' => ['required', 'string', 'max:150'],
             'librarian_id' => ['required'],
         ];

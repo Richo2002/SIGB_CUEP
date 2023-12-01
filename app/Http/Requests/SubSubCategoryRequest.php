@@ -29,7 +29,7 @@ class SubSubCategoryRequest extends FormRequest
         $id = Route::current()->parameter('sub_sub_category');
 
         return [
-            'name' => ['required', 'string', 'max:150', Rule::unique('sub_sub_categories')->ignore($id ?? null)],
+            'name' => ['required', 'string', 'max:255', Rule::unique('sub_sub_categories')->ignore($id ?? null)],
             'classification_number' => ['required', 'regex:/^[0-9]+$/', Rule::unique('sub_sub_categories')->ignore($id ?? null)],
         ];
     }

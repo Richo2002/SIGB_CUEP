@@ -28,12 +28,12 @@ class LibrarianRequest extends FormRequest
     {
         $id = Route::current()->parameter('librarian');
         return [
-            'firstname' => ['required', 'string', 'max:100'],
-            'lastname' => ['required', 'string', 'max:50'],
+            'firstname' => ['required', 'string', 'max:150'],
+            'lastname' => ['required', 'string', 'max:100'],
             'npi' => ['required', 'regex:/^\d{10}$/', Rule::unique('users')->ignore($id ?? null)],
             'email' => ['required', 'email', Rule::unique('users')->ignore($id ?? null)],
             'phone_number' => ['required', 'regex:/^\d{8}$/'],
-            'address' => ['nullable', 'string', 'max:150'],
+            'address' => ['nullable', 'string', 'max:200'],
             'photo' => ['nullable', 'image', 'max:2048'],
             // 'role' => ['required', Rule::in(['Bibliothécaire', 'Administrateur', 'Etudiant', 'Professeur', 'Personnel', 'Autre'])],
         ];
