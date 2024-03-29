@@ -15,7 +15,7 @@ class Librarian extends Component
 
     public function mount()
     {
-        $this->librariansLength = User::where('role', '=' ,'Bibliothécaire')->count();
+        $this->librariansLength = User::where('role', '=', 'Bibliothécaire')->count();
     }
 
     public function updating($name, $value)
@@ -33,15 +33,17 @@ class Librarian extends Component
 
     public function render()
     {
-        $librarians = User::where('role', '=' ,'Bibliothécaire')
-            ->where('email', 'like', '%'. $this->searchInput. '%')
+        $librarians = User::where(function($query) {
+            $query->where('email', 'like', '%'. $this->searchInput. '%')
             ->orWhere('phone_number', 'like', '%'.$this->searchInput.'%')
             ->orWhere('lastname', 'like', '%'.$this->searchInput.'%')
             ->orWhere('firstname', 'like', '%'.$this->searchInput.'%')
             ->orWhereHas('institute', function($subQuery) {
                 $subQuery->where('name', 'like', '%'.$this->searchInput.'%')
                 ->orWhere('address', 'like', '%'.$this->searchInput.'%');
-                })->orderByDesc('id')->paginate(10);
+                });
+            })->where('role', '=' ,'Bibliothécaire')
+            ->orderByDesc('id')->paginate(10);
 
         return view('livewire.librarian', [
             'librarians' => $librarians

@@ -1,7 +1,7 @@
 <div>
     <form action="/loans" method="POST">
         @csrf
-        @if (!session()->has('reader_npi'))
+        @if (!session()->has('reader_registration_number'))
             <div class="mb-3">
                 <label for="preteur">Choisir le préteur :</label>
                 <div class="form-check">
@@ -19,7 +19,7 @@
             </div>
         @endif
 
-        @if ($loaner ==  "Group" && !session()->has('reader_npi'))
+        @if ($loaner ==  "Group" && !session()->has('reader_registration_number'))
             <div class="row  mb-3">
                 <div class="col-lg-6 col-12">
                     <div class="row">
@@ -43,10 +43,10 @@
                 <div class="col-lg-6 col-12">
                     <div class="row">
                         <div class="col-12 input-group">
-                            <span class="input-group-text" id="basic-addon2">NIP<span class="text-danger fw-bold">*</span></span>
-                            <input type="text" class="form-control" placeholder="Entrez son NIP" autofocus aria-describedby="basic-addon1" required name="npi" value="{{ session()->has('reader_npi') ? session('reader_npi') : old('npi') }}">
+                            <span class="input-group-text" id="basic-addon2">Matricule<span class="text-danger fw-bold">*</span></span>
+                            <input type="text" class="form-control" placeholder="Entrez son matricule" autofocus aria-describedby="basic-addon1" required name="registration_number" value="{{ session()->has('reader_registration_number') ? session('reader_registration_number') : old('registration_number') }}">
                         </div>
-                        @error('npi')
+                        @error('registration_number')
                             <div class="col-12 text-danger">{{ $message }}</div>
                         @enderror
                     </div>

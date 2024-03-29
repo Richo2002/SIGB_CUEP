@@ -89,18 +89,48 @@
                                     </div>
                                     <div class="col-lg-9 col-12">
                                         <div class="row mb-lg-3">
-                                            <div class="col-lg-6 col-12 mb-lg-0 mb-3">
-                                                <div class="row">
-                                                    <div class="col-12 input-group">
-                                                        <span class="input-group-text" id="basic-addon1">NIP<span class="text-danger fw-bold">*</span></span>
-                                                        <input type="text" class="form-control" placeholder="Entrez son NIP" required name="npi" value="{{ isset($user) ? $user->npi : old('npi') }}"> <br>
+                                            @if($user->role!='Bibliothécaire' && $user->role!='Administrateur')
+                                                <div class="col-lg-6 col-12 mb-lg-0 mb-3">
+                                                    <div class="row">
+                                                        <div class="col-12 input-group">
+                                                            <span class="input-group-text" id="basic-addon1">NIP<span class="text-danger fw-bold">*</span></span>
+                                                            <input type="text" class="form-control" placeholder="Entrez son NIP" name="npi" required value="{{ isset($user) ? $user->npi : old('npi') }}"> <br>
+                                                        </div>
+                                                        @error('npi')
+                                                            <div class="col-12 text-danger">{{ $message }}</div>
+                                                        @enderror
                                                     </div>
-                                                    @error('npi')
-                                                        <div class="col-12 text-danger">{{ $message }}</div>
-                                                    @enderror
                                                 </div>
-                                            </div>
-
+                                                <div class="col-lg-6 col-12 mb-lg-0">
+                                                    <div class="row">
+                                                        <div class="col-12 input-group">
+                                                            <span class="input-group-text" id="basic-addon1">Matricule
+                                                                @if ($user->role!='Bibliothécaire' || $user->role!='Administrateur')
+                                                                    <span class="text-danger fw-bold">*</span>
+                                                                @endif
+                                                            </span>
+                                                            <input type="text" class="form-control" placeholder="Entrez son matricule" name="registration_number" required value="{{ isset($user) ? $user->registration_number : old('registration_number') }}">
+                                                        </div>
+                                                        @error('registration_number')
+                                                            <div class="col-12 text-danger">Le champ matricule doit comporter 12 caractères.</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            @else
+                                                <div class="col-12 mb-lg-0 mb-3">
+                                                    <div class="row">
+                                                        <div class="col-12 input-group">
+                                                            <span class="input-group-text" id="basic-addon1">NIP<span class="text-danger fw-bold">*</span></span>
+                                                            <input type="text" class="form-control" placeholder="Entrez son NIP" name="npi" required value="{{ isset($user) ? $user->npi : old('npi') }}"> <br>
+                                                        </div>
+                                                        @error('npi')
+                                                            <div class="col-12 text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                            @endif
+                                        </div>
+                                        <div class="row mb-3">
                                             <div class="col-lg-6 col-12 mb-lg-0 mb-3">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
@@ -112,9 +142,7 @@
                                                     @enderror
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-3">
-                                            <div class="col-12">
+                                            <div class="col-lg-6 col-12 mb-lg-0">
                                                 <div class="row">
                                                     <div class="col-12 input-group">
                                                         <span class="input-group-text" id="basic-addon2">Prénoms<span class="text-danger fw-bold">*</span></span>

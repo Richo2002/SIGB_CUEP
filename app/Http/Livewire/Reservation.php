@@ -45,7 +45,7 @@ class Reservation extends Component
         $reservation = ModelsReservation::findOrFail($currentReservationId);
 
         $resourceIds = $reservation->resources->pluck('id')->toArray();
-        session(['selections' => $resourceIds, 'reader_npi' => $reservation->reader->npi]);
+        session(['selections' => $resourceIds, 'reader_registration_number' => $reservation->reader->registration_number]);
         return redirect()->route('loans.create');
     }
 

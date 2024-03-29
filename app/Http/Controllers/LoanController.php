@@ -60,11 +60,11 @@ class LoanController extends Controller
         }
         else
         {
-            $loaner = User::user()->where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire'], ['npi', intval($request->npi)]])->first();
+            $loaner = User::user()->where([['role', '<>' ,'Administrateur'], ['role', '<>' ,'Bibliothécaire'], ['registration_number', intval($request->registration_number)]])->first();
 
             if($loaner == null)
             {
-                return back()->with(['message' => "Nous n'avions pas trouvé de lecteur avec ce NIP dans votre bibliotheque"]);
+                return back()->with(['message' => "Nous n'avions pas trouvé de lecteur avec ce matricule dans votre bibliotheque"]);
             }
         }
 
@@ -96,9 +96,9 @@ class LoanController extends Controller
 
         session()->forget('selections');
 
-        if(session()->has('reader_npi'))
+        if(session()->has('reader_registration_number'))
         {
-            session()->forget('reader_npi');
+            session()->forget('reader_registration_number');
             $reservation = Reservation::orderByDesc('id')->where('reader_id', $loaner->id)->first();
 
             $reservation->status = "Terminé";
